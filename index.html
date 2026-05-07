@@ -54,29 +54,28 @@
 
     <nav class="max-w-4xl mx-auto -mt-10 px-4 sticky top-4 z-50">
         <div class="bg-white/90 glass rounded-[2rem] shadow-2xl p-2 flex justify-between overflow-x-auto no-scrollbar border border-slate-200/50">
-            <button onclick="showTab('ruta')" id="btn-ruta" class="tab-btn active flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 transition-all">
+            <button onclick="showTab('ruta')" id="btn-ruta" class="tab-btn active flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1">
                 <i data-lucide="map" class="w-5 h-5"></i><span>RUTA</span>
             </button>
-            <button onclick="showTab('menu')" id="btn-menu" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+            <button onclick="showTab('menu')" id="btn-menu" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
                 <i data-lucide="utensils" class="w-5 h-5"></i><span>MENÚ</span>
             </button>
-            <button onclick="showTab('compra')" id="btn-compra" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+            <button onclick="showTab('compra')" id="btn-compra" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
                 <i data-lucide="shopping-bag" class="w-5 h-5"></i><span>COMPRA</span>
             </button>
-            <button onclick="showTab('musica')" id="btn-musica" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+            <button onclick="showTab('gastos')" id="btn-gastos" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
+                <i data-lucide="wallet" class="w-5 h-5"></i><span>GASTOS</span>
+            </button>
+            <button onclick="showTab('musica')" id="btn-musica" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
                 <i data-lucide="music" class="w-5 h-5"></i><span>MÚSICA</span>
             </button>
-            <button onclick="showTab('multimedia')" id="btn-multimedia" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
-                <i data-lucide="camera" class="w-5 h-5"></i><span>FOTOS</span>
-            </button>
-            <button onclick="showTab('coches')" id="btn-coches" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+            <button onclick="showTab('coches')" id="btn-coches" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
                 <i data-lucide="car" class="w-5 h-5"></i><span>COCHES</span>
             </button>
         </div>
     </nav>
 
     <main class="max-w-4xl mx-auto p-6 mt-4">
-
         <!-- Tab: Ruta -->
         <section id="tab-ruta" class="tab-content active space-y-8">
             <h2 class="text-3xl font-black text-slate-900 italic">Itinerario</h2>
@@ -85,29 +84,26 @@
                     <div class="absolute -left-[2.6rem] top-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-black text-xs">V</div>
                     <p class="text-[10px] font-black text-indigo-500 uppercase tracking-widest">Viernes 06 Junio</p>
                     <h4 class="font-bold text-slate-800">Llegada a Can Ribes (18:00)</h4>
-                    <p class="text-xs text-slate-500 italic">Reparto de camas, cena Giacomo y picoteo.</p>
+                    <p class="text-xs text-slate-500 italic">Reparto de camas y cena Giacomo.</p>
                 </div>
                 <div class="relative pb-6">
                     <div class="absolute -left-[2.6rem] top-0 w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-black text-xs">S</div>
                     <p class="text-[10px] font-black text-orange-500 uppercase tracking-widest">Sábado 07 Junio</p>
-                    <h4 class="font-bold text-slate-800">Asado & Piscina</h4>
-                    <p class="text-xs text-slate-500 italic">Juegos, gran asado Gabriel/Elvin y velada musical.</p>
+                    <h4 class="font-bold text-slate-800">Día de Asado</h4>
+                    <p class="text-xs text-slate-500 italic">Piscina, juegos y el gran asado de Gabriel/Elvin.</p>
                 </div>
-                <div class="relative pb-6">
+                <div class="relative">
                     <div class="absolute -left-[2.6rem] top-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">D</div>
                     <p class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Domingo 08 Junio</p>
                     <h4 class="font-bold text-slate-800">Paella Jordi & Despedida</h4>
-                    <p class="text-xs text-slate-500 italic">Brunch Guillermo, paella Jordi y recogida de la casa.</p>
+                    <p class="text-xs text-slate-500 italic">Brunch Guillermo y recogida.</p>
                 </div>
             </div>
         </section>
 
         <!-- Tab: Menú -->
         <section id="tab-menu" class="tab-content space-y-6">
-            <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900 italic">Gastronomía</h2>
-                <p class="text-[10px] bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full font-bold uppercase">Editable</p>
-            </div>
+            <h2 class="text-3xl font-black text-slate-900 italic">Gastronomía</h2>
             <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
         </section>
 
@@ -122,10 +118,37 @@
             <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden divide-y divide-slate-50" id="shopping-list"></div>
         </section>
 
+        <!-- Tab: Gastos -->
+        <section id="tab-gastos" class="tab-content space-y-6">
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-black text-slate-900 italic">Gastos & Cuentas</h2>
+                <button onclick="openModal('gastos')" class="bg-emerald-600 text-white p-4 rounded-3xl shadow-xl active:scale-95 transition-transform">
+                    <i data-lucide="plus"></i>
+                </button>
+            </div>
+
+            <!-- Resumen de Gastos -->
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-indigo-600 text-white p-5 rounded-[2rem] shadow-lg">
+                    <p class="text-[10px] font-black opacity-80 uppercase">Total Gastado</p>
+                    <p id="total-spent" class="text-2xl font-black">0.00€</p>
+                </div>
+                <div class="bg-emerald-600 text-white p-5 rounded-[2rem] shadow-lg">
+                    <p class="text-[10px] font-black opacity-80 uppercase">Por Persona (19)</p>
+                    <p id="per-person" class="text-2xl font-black">0.00€</p>
+                </div>
+            </div>
+
+            <div id="expenses-list" class="space-y-3"></div>
+
+            <h3 class="text-xl font-black text-slate-900 mt-8 mb-4 italic">Balance de Liquidación</h3>
+            <div id="settlement-list" class="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden divide-y divide-slate-50"></div>
+        </section>
+
         <!-- Tab: Musica -->
         <section id="tab-musica" class="tab-content space-y-6">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900 italic">Playlist & Peticiones</h2>
+                <h2 class="text-3xl font-black text-slate-900 italic">Playlist</h2>
                 <button onclick="openModal('musica')" class="bg-indigo-600 text-white p-4 rounded-3xl shadow-xl active:scale-95 transition-transform">
                     <i data-lucide="plus"></i>
                 </button>
@@ -133,28 +156,9 @@
             <div id="music-list" class="grid grid-cols-1 gap-3"></div>
         </section>
 
-        <!-- Tab: Multimedia -->
-        <section id="tab-multimedia" class="tab-content space-y-6">
-            <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900 italic">Multimedia</h2>
-                <button onclick="openModal('multimedia')" class="bg-rose-500 text-white p-4 rounded-3xl shadow-xl active:scale-95 transition-transform">
-                    <i data-lucide="upload-cloud"></i>
-                </button>
-            </div>
-            <div class="bg-indigo-50 p-6 rounded-[2.5rem] border border-indigo-100 mb-6">
-                <p class="text-xs font-bold text-indigo-900 uppercase tracking-widest mb-2 flex items-center gap-2">
-                    <i data-lucide="link" class="w-4 h-4"></i> Álbum Compartido Principal
-                </p>
-                <a href="#" class="block bg-white p-4 rounded-2xl text-indigo-600 font-bold text-sm shadow-sm hover:bg-indigo-600 hover:text-white transition-all text-center">
-                    ABRIR ÁLBUM GOOGLE PHOTOS / ICLOUD
-                </a>
-            </div>
-            <div id="media-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </section>
-
         <!-- Tab: Coches -->
         <section id="tab-coches" class="tab-content space-y-6">
-            <h2 class="text-3xl font-black text-slate-900 italic">Logística Coches</h2>
+            <h2 class="text-3xl font-black text-slate-900 italic">Coches</h2>
             <div id="cars-container" class="grid grid-cols-1 gap-4"></div>
         </section>
     </main>
@@ -172,7 +176,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, doc, onSnapshot, setDoc, updateDoc, collection, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, setDoc, updateDoc, collection, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
         const firebaseConfig = {
@@ -187,53 +191,188 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const appId = "rural-can-ribes-2026-v2"; 
+        const appId = "rural-can-ribes-2026-v2";
+
+        const PARTICIPANTS = ["Jordi", "Pako Espi", "Ruben", "Giacomo", "Luis", "Gabriel", "Michele", "Jonas", "Elvin", "Albert", "Guillermo", "Víctor", "Gábor", "Iban", "Ferran", "Nico", "Cristian", "Mikel", "Alex"];
 
         let currentUser = localStorage.getItem('rural_user');
         let currentModalMode = '';
         let currentEditId = '';
-        let currentMusicData = {};
+        let currentData = {};
 
-        // ... existing menu and cars code ...
+        const menusInfo = {
+            v_cena: { title: "Viernes Cena", chef: "Giacomo", cleaning: "Guillermo / Ferran" },
+            s_des: { title: "Sábado Desayuno", chef: "Jonas", cleaning: "Gabriel" },
+            s_com: { title: "Sábado Comida (Asado)", chef: "Gabriel / Elvin", cleaning: "Gábor / +1" },
+            s_cena: { title: "Sábado Cena", chef: "Giacomo", cleaning: "Víctor / Luis" },
+            d_des: { title: "Domingo Desayuno", chef: "Guillermo", cleaning: "Nico" },
+            d_com: { title: "Domingo Comida (Paella)", chef: "Jordi", cleaning: "Todos" }
+        };
 
-        const renderMusica = (list) => {
-            const container = document.getElementById('music-list');
-            container.innerHTML = list.sort((a,b) => b.time - a.time).map(m => {
-                const isSpotify = m.link && m.link.includes('spotify');
-                const isYoutube = m.link && (m.link.includes('youtube') || m.link.includes('youtu.be'));
+        const carsInfo = [
+            { time: "14:00", driver: "Elvin", pax: ["Mikel", "Giacomo", "Gabriel"] },
+            { time: "15:00", driver: "Iban", pax: ["Michele", "Albert", "Luis", "Rubén"] },
+            { time: "18:00", driver: "Víctor", pax: ["Ferran", "Nico", "Gábor"] }
+        ];
+
+        const renderMenu = (data) => {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = Object.keys(menusInfo).map(key => {
+                const info = menusInfo[key];
+                const saved = data[key] || {};
                 return `
-                <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm flex items-center justify-between group">
-                    <div class="flex items-center gap-4 flex-1 min-w-0">
-                        <div class="w-10 h-10 flex-shrink-0 ${isSpotify ? 'bg-green-100 text-green-600' : isYoutube ? 'bg-red-100 text-red-600' : 'bg-slate-100 text-slate-600'} rounded-2xl flex items-center justify-center">
-                            <i data-lucide="${isSpotify ? 'music' : isYoutube ? 'youtube' : 'radio'}"></i>
+                <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[10px] font-black text-emerald-600 uppercase tracking-tighter">${info.title}</p>
+                            <h4 class="text-xl font-black text-slate-800">${info.chef}</h4>
                         </div>
-                        <div class="truncate">
-                            <h4 class="font-black text-slate-800 text-sm truncate">${m.title}</h4>
-                            ${m.link ? `<a href="${m.link}" target="_blank" class="text-[10px] text-indigo-500 font-bold hover:underline truncate block">Ver enlace</a>` : '<p class="text-[10px] text-slate-400 font-bold uppercase italic">Sin enlace</p>'}
-                        </div>
+                        <button onclick="window.openModal('menu', '${key}')" class="p-2 bg-slate-50 text-slate-400 rounded-xl hover:text-emerald-600 transition-colors">
+                            <i data-lucide="edit-3" class="w-5 h-5"></i>
+                        </button>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="editMusica('${m.id}', '${m.title.replace(/'/g, "\\'")}', '${(m.link || '').replace(/'/g, "\\'")}')" class="p-2 text-slate-400 hover:text-indigo-500 transition-colors">
-                            <i data-lucide="edit-2" class="w-4 h-4"></i>
-                        </button>
-                        <button onclick="deleteMusica('${m.id}')" class="p-2 text-slate-400 hover:text-rose-500 transition-colors">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
+                    <div class="bg-slate-50 p-4 rounded-2xl">
+                        <p class="text-xs font-bold text-slate-400 mb-1 uppercase text-[9px]">Platos:</p>
+                        <p class="text-sm text-slate-700">${saved.platos || '<span class="italic text-slate-300">Pendiente de definir...</span>'}</p>
+                        ${saved.ingredientes ? `<p class="mt-2 text-[10px] text-emerald-500 font-bold">🛒 Ingredientes: ${saved.ingredientes}</p>` : ''}
+                    </div>
+                    <div class="flex items-center gap-2 text-indigo-500">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <p class="text-[10px] font-black uppercase">Fregar: ${info.cleaning}</p>
                     </div>
                 </div>
-            `}).join('');
+                `;
+            }).join('');
             lucide.createIcons();
         };
 
-        window.deleteMusica = async (id) => {
-            if(confirm("¿Seguro que quieres borrar esta petición?")) {
-                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'musica', id));
+        const renderCompra = (list) => {
+            const container = document.getElementById('shopping-list');
+            container.innerHTML = list.sort((a,b) => b.time - a.time).map(item => `
+                <div class="flex items-center justify-between p-5 group hover:bg-slate-50 transition-colors">
+                    <div class="flex items-center gap-4 flex-1 cursor-pointer" onclick="window.toggleCompra('${item.id}', ${item.checked})">
+                        <div class="w-6 h-6 rounded-full border-2 ${item.checked ? 'bg-emerald-500 border-emerald-500' : 'border-slate-200'} flex items-center justify-center transition-all">
+                            ${item.checked ? '<i data-lucide="check" class="w-4 h-4 text-white"></i>' : ''}
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold ${item.checked ? 'checked text-slate-300' : 'text-slate-700'}">${item.text}</p>
+                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">${item.user || 'Sist'}</p>
+                        </div>
+                    </div>
+                    <button onclick="window.deleteItem('compra', '${item.id}')" class="p-2 text-slate-300 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-all">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        };
+
+        const renderExpenses = (list) => {
+            const container = document.getElementById('expenses-list');
+            const totalEl = document.getElementById('total-spent');
+            const perPersonEl = document.getElementById('per-person');
+            const settlementEl = document.getElementById('settlement-list');
+
+            let total = 0;
+            const paidByMember = {};
+            PARTICIPANTS.forEach(p => paidByMember[p] = 0);
+
+            list.forEach(ex => {
+                total += parseFloat(ex.amount);
+                paidByMember[ex.payer] = (paidByMember[ex.payer] || 0) + parseFloat(ex.amount);
+            });
+
+            totalEl.innerText = `${total.toFixed(2)}€`;
+            const perPerson = total / 19;
+            perPersonEl.innerText = `${perPerson.toFixed(2)}€`;
+
+            container.innerHTML = list.map(ex => `
+                <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h4 class="font-black text-slate-800">${ex.description}</h4>
+                        <div class="flex gap-2 items-center">
+                            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-bold uppercase">${ex.payer}</span>
+                            ${ex.receiptUrl ? `<a href="${ex.receiptUrl}" target="_blank" class="text-[10px] text-indigo-500 font-bold flex items-center gap-1 underline"><i data-lucide="file-text" class="w-3 h-3"></i>Ver Ticket</a>` : ''}
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-black text-emerald-600">${parseFloat(ex.amount).toFixed(2)}€</p>
+                        <button onclick="window.deleteItem('expenses', '${ex.id}')" class="text-[10px] text-rose-400 font-bold">Borrar</button>
+                    </div>
+                </div>
+            `).join('');
+
+            settlementEl.innerHTML = PARTICIPANTS.map(p => {
+                const balance = paidByMember[p] - perPerson;
+                return `
+                <div class="flex items-center justify-between p-4 px-6">
+                    <span class="text-sm font-bold text-slate-700">${p}</span>
+                    <span class="text-sm font-black ${balance >= 0 ? 'text-emerald-600' : 'text-rose-500'}">
+                        ${balance >= 0 ? '+' : ''}${balance.toFixed(2)}€
+                    </span>
+                </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        };
+
+        const renderMusica = (list) => {
+            const container = document.getElementById('music-list');
+            container.innerHTML = list.map(m => `
+                <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                        <div class="w-10 h-10 flex-shrink-0 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center">
+                            <i data-lucide="music"></i>
+                        </div>
+                        <div class="truncate">
+                            <h4 class="font-black text-slate-800 text-sm truncate">${m.title}</h4>
+                            ${m.link ? `<a href="${m.link}" target="_blank" class="text-[10px] text-indigo-500 font-bold truncate block">Ver Enlace</a>` : ''}
+                        </div>
+                    </div>
+                    <button onclick="window.deleteItem('musica', '${m.id}')" class="p-2 text-slate-300 hover:text-rose-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        };
+
+        const renderCars = () => {
+            const container = document.getElementById('cars-container');
+            container.innerHTML = carsInfo.map(car => `
+                <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="bg-indigo-600 text-white px-4 py-1 rounded-full text-[10px] font-black uppercase">Salida ${car.time}</span>
+                        <h4 class="text-xl font-black text-slate-800 italic">Coche ${car.driver}</h4>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        ${car.pax.map(p => `<span class="bg-slate-100 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold">${p}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        };
+
+        window.login = () => {
+            const name = document.getElementById('username-input').value.trim();
+            if (name) {
+                localStorage.setItem('rural_user', name);
+                currentUser = name;
+                document.getElementById('login-overlay').classList.add('hidden');
+                initApp();
             }
         };
 
-        window.editMusica = (id, title, link) => {
-            currentMusicData = { id, title, link };
-            openModal('musica', id);
+        window.showTab = (tabId) => {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+                el.classList.add('text-slate-400');
+            });
+            document.getElementById('tab-' + tabId).classList.add('active');
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.add('active');
+            btn.classList.remove('text-slate-400');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            lucide.createIcons();
         };
 
         window.openModal = (mode, id = '') => {
@@ -244,85 +383,77 @@
             const t = document.getElementById('modal-title');
             m.classList.remove('hidden');
             
-            if (mode === 'musica') {
-                t.innerText = id ? "Editar Canción" : "Sugerir Canción";
+            f.innerHTML = '';
+            if (mode === 'menu') {
+                t.innerText = `Editar ${menusInfo[id].title}`;
                 f.innerHTML = `
-                    <input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl outline-none border border-slate-100 font-bold" placeholder="Título o Artista" value="${id ? currentMusicData.title : ''}">
-                    <input id="inp-2" class="w-full bg-slate-50 p-5 rounded-2xl outline-none border border-slate-100 text-xs" placeholder="Enlace Spotify/YouTube (Opcional)" value="${id ? currentMusicData.link : ''}">
+                    <textarea id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-sm" placeholder="Describe los platos..." rows="3"></textarea>
+                    <textarea id="inp-2" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-sm" placeholder="Ingredientes (separados por comas) para la compra automática..." rows="2"></textarea>
                 `;
             } else if (mode === 'compra') {
-                // ... same as before ...
                 t.innerText = "Añadir a la Compra";
                 f.innerHTML = `<input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold" placeholder="¿Qué hace falta?">`;
-            } else if (mode === 'menu') {
-                t.innerText = "Editar Menú";
-                f.innerHTML = `<textarea id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl outline-none border border-slate-100 text-sm" placeholder="Escribe aquí los platos que vas a preparar..." rows="4"></textarea>`;
-            } else if (mode === 'multimedia') {
-                t.innerText = "Compartir Fotos/Vídeos";
+            } else if (mode === 'gastos') {
+                t.innerText = "Nuevo Gasto";
                 f.innerHTML = `
-                    <input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl outline-none border border-slate-100 font-bold" placeholder="Descripción breve">
-                    <input id="inp-2" class="w-full bg-slate-50 p-5 rounded-2xl outline-none border border-slate-100 text-xs" placeholder="Enlace URL de la foto/video/álbum">
+                    <input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold" placeholder="Concepto (ej: Carne asado)">
+                    <input id="inp-2" type="number" step="0.01" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-black text-emerald-600" placeholder="Importe €">
+                    <select id="inp-3" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold">
+                        ${PARTICIPANTS.map(p => `<option value="${p}" ${p === currentUser ? 'selected' : ''}>Pagado por: ${p}</option>`).join('')}
+                    </select>
+                    <input id="inp-4" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-xs" placeholder="Enlace al Ticket (opcional)">
+                `;
+            } else if (mode === 'musica') {
+                t.innerText = "Petición Musical";
+                f.innerHTML = `
+                    <input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold" placeholder="Título / Artista">
+                    <input id="inp-2" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-xs" placeholder="Link Spotify/YouTube (opcional)">
                 `;
             }
         };
+
+        window.closeModal = () => document.getElementById('modal').classList.add('hidden');
 
         document.getElementById('modal-save').onclick = async () => {
             const v1 = document.getElementById('inp-1').value.trim();
             if (!v1) return;
 
-            if (currentModalMode === 'musica') {
+            if (currentModalMode === 'menu') {
                 const v2 = document.getElementById('inp-2').value.trim();
-                const data = { title: v1, link: v2, user: currentUser, time: Date.now() };
-                if (currentEditId) {
-                    await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'musica', currentEditId), data);
-                } else {
-                    await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'musica')), data);
+                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'menu', currentEditId), { platos: v1, ingredientes: v2, time: Date.now() });
+                
+                if (v2) {
+                    const list = v2.split(',').map(i => i.trim()).filter(i => i);
+                    for (const item of list) {
+                        await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'compra')), { 
+                            text: `${item} (${menusInfo[currentEditId].title})`, 
+                            user: 'Sistema', checked: false, time: Date.now() 
+                        });
+                    }
                 }
             } else if (currentModalMode === 'compra') {
                 await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'compra')), { text: v1, user: currentUser, checked: false, time: Date.now() });
-            } else if (currentModalMode === 'menu') {
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'menu', currentEditId), { platos: v1, time: Date.now() });
-            } else if (currentModalMode === 'multimedia') {
-                const v2 = document.getElementById('inp-2').value.trim();
-                await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'media')), { title: v1, url: v2, user: currentUser, time: Date.now() });
+            } else if (currentModalMode === 'gastos') {
+                const v2 = document.getElementById('inp-2').value;
+                const v3 = document.getElementById('inp-3').value;
+                const v4 = document.getElementById('inp-4').value;
+                await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'expenses')), { 
+                    description: v1, amount: v2, payer: v3, receiptUrl: v4, time: Date.now() 
+                });
+            } else if (currentModalMode === 'musica') {
+                const v2 = document.getElementById('inp-2').value;
+                await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'musica')), { title: v1, link: v2, user: currentUser, time: Date.now() });
             }
             closeModal();
         };
 
-        // ... existing subscription logic ...
-        const subscribeData = () => {
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'menu'), (snap) => {
-                const map = {};
-                snap.forEach(doc => map[doc.id] = doc.data());
-                renderMenu(map);
-            });
-
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'compra'), (snap) => {
-                const list = [];
-                snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                renderCompra(list);
-            });
-
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'musica'), (snap) => {
-                const list = [];
-                snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                renderMusica(list);
-            });
-
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'media'), (snap) => {
-                const list = [];
-                snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                renderMedia(list);
-            });
+        window.toggleCompra = async (id, currentStatus) => {
+            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'compra', id), { checked: !currentStatus });
         };
 
-        window.login = async () => {
-            const name = document.getElementById('username-input').value.trim();
-            if (name) {
-                localStorage.setItem('rural_user', name);
-                currentUser = name;
-                document.getElementById('login-overlay').classList.add('hidden');
-                initApp();
+        window.deleteItem = async (col, id) => {
+            if(confirm("¿Estás seguro de borrar este elemento?")) {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id));
             }
         };
 
@@ -330,21 +461,44 @@
             if (!currentUser) return;
             document.getElementById('login-overlay').classList.add('hidden');
             await signInAnonymously(auth);
-            subscribeData();
+            
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'menu'), (snap) => {
+                const map = {}; snap.forEach(doc => map[doc.id] = doc.data());
+                renderMenu(map);
+            });
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'compra'), (snap) => {
+                const list = []; snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+                renderCompra(list);
+            });
+
+            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), orderBy('time', 'desc')), (snap) => {
+                const list = []; snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+                renderExpenses(list);
+            });
+
+            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'musica'), (snap) => {
+                const list = []; snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
+                renderMusica(list);
+            });
+
+            renderCars();
             updateCountdown();
-            lucide.createIcons();
         };
-        
-        window.closeModal = () => document.getElementById('modal').classList.add('hidden');
-        window.showTab = (tabId) => {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.getElementById('btn-' + tabId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            lucide.createIcons();
+
+        const updateCountdown = () => {
+            const target = new Date('2026-06-06T18:00:00').getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const diff = target - now;
+                if (diff < 0) return;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('countdown').innerText = `${d}d : ${h}h`;
+            }, 1000);
         };
 
         if (currentUser) initApp();
     </script>
-<!-- ... rest of existing code ... -->
+</body>
+</html>
