@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can Ribes 2026 - Hub Grupal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .tab-active { border-bottom: 3px solid #059669; color: #059669; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        .item-checked { text-decoration: line-through; opacity: 0.5; }
+        .activity-card { transition: all 0.2s ease; }
+        .activity-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="pb-24">
+
+    <div id="login-overlay" class="fixed inset-0 z-[100] bg-emerald-950 flex items-center justify-center p-6 hidden">
+        <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-sm shadow-2xl text-center">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <i data-lucide="user-check" class="w-8 h-8"></i>
+            </div>
+            <h2 class="text-2xl font-black text-slate-900 mb-2 italic">¿Quién eres?</h2>
+            <p class="text-sm text-slate-500 mb-6">Introduce tu nombre para participar.</p>
+            <input type="text" id="username-input" class="w-full bg-slate-100 border-none rounded-2xl p-4 mb-4 focus:ring-2 focus:ring-emerald-500 outline-none font-bold" placeholder="Tu nombre...">
+            <button onclick="login()" class="w-full bg-emerald-600 text-white font-black py-4 rounded-2xl shadow-lg shadow-emerald-200 active:scale-95 transition-transform">Entrar al Hub</button>
+        </div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-6 pt-4 flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-emerald-800/50">
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="display-username">Invitado</span>
+        </div>
+        <button onclick="logout()" class="hover:text-rose-500">Cerrar Sesión</button>
+    </div>
+
+    <header class="bg-emerald-950 text-white pt-8 pb-20 px-6 rounded-b-[3rem] relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-6">
+                <div>
+                    <span class="bg-emerald-800 text-emerald-200 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-[0.2em]">Escapada Rural 2026</span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight italic">Can Ribes <span class="text-emerald-400">Hub</span></h1>
+                    <div class="mt-6 flex flex-wrap gap-4 text-emerald-100/80 text-sm font-medium">
+                        <span class="flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4"></i> 6 - 8 Junio</span>
+                        <span class="flex items-center gap-2"><i data-lucide="users" class="w-4 h-4"></i> 19 Participantes</span>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-[2rem] border border-white/10 text-center min-w-[180px] shadow-2xl">
+                    <p class="text-[10px] uppercase font-black text-emerald-300 mb-1">Cuenta Atrás</p>
+                    <div id="countdown" class="text-xl font-black tabular-nums">00d : 00h</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="max-w-4xl mx-auto -mt-10 px-4 sticky top-4 z-50">
+        <div class="bg-white/90 backdrop-blur-md rounded-[1.5rem] shadow-2xl p-2 flex justify-between overflow-x-auto no-scrollbar border border-slate-200/50">
+            <button onclick="showTab('ruta')" id="btn-ruta" class="flex-1 py-3 px-4 text-[10px] font-black flex flex-col items-center gap-1 transition-all">
+                <i data-lucide="map" class="w-5 h-5"></i><span>RUTA</span>
+            </button>
+            <button onclick="showTab('menu')" id="btn-menu" class="flex-1 py-3 px-4 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="utensils" class="w-5 h-5"></i><span>MENÚ</span>
+            </button>
+            <button onclick="showTab('compra')" id="btn-compra" class="flex-1 py-3 px-4 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="shopping-basket" class="w-5 h-5"></i><span>COMPRA</span>
+            </button>
+            <button onclick="showTab('juegos')" id="btn-juegos" class="flex-1 py-3 px-4 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="dices" class="w-5 h-5"></i><span>JUEGOS</span>
+            </button>
+            <button onclick="showTab('coches')" id="btn-coches" class="flex-1 py-3 px-4 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="car" class="w-5 h-5"></i><span>COCHES</span>
+            </button>
+            <button onclick="showTab('notas')" id="btn-notas" class="flex-1 py-3 px-4 text-[10px] font-black flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="message-square" class="w-5 h-5"></i><span>AVISOS</span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto p-6 mt-4">
+
+        <!-- Tab: Ruta -->
+        <div id="tab-ruta" class="tab-content space-y-10">
+            <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic">Cronograma</h2>
+            <div class="space-y-4 border-l-4 border-emerald-100 ml-4 pl-6 relative">
+                 <div class="absolute -left-[1.15rem] top-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-black text-xs">V</div>
+                 <div class="pb-8">
+                    <p class="text-[10px] font-black text-indigo-500 uppercase tracking-widest">Viernes 06 de Junio</p>
+                    <h4 class="font-black text-slate-800 text-xl">Llegada a Can Ribes</h4>
+                    <p class="text-sm text-slate-500 italic leading-relaxed">Entrada a partir de las 14h (Escalonada según coches).</p>
+                 </div>
+                 
+                 <div class="absolute -left-[1.15rem] top-32 w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-black text-xs">S</div>
+                 <div class="pb-8">
+                    <p class="text-[10px] font-black text-orange-500 uppercase tracking-widest">Sábado 07 de Junio</p>
+                    <h4 class="font-black text-slate-800 text-xl">El Gran Asado</h4>
+                    <p class="text-sm text-slate-500 italic leading-relaxed">Día de convivencia, piscina y barbacoa épica.</p>
+                 </div>
+
+                 <div class="absolute -left-[1.15rem] top-64 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">D</div>
+                 <div class="pb-8">
+                    <p class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Domingo 08 de Junio</p>
+                    <h4 class="font-black text-slate-800 text-xl">Paella y Cierre</h4>
+                    <p class="text-sm text-slate-500 italic leading-relaxed">Desayuno recuperación, paella final y salida.</p>
+                 </div>
+            </div>
+        </div>
+
+        <!-- Tab: Menú -->
+        <div id="tab-menu" class="tab-content hidden space-y-8">
+            <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic">Plan de Comidas y Limpieza</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="menu-container">
+                <!-- Dinámico -->
+            </div>
+        </div>
+
+        <!-- Tab: Compra Colaborativa -->
+        <div id="tab-compra" class="tab-content hidden space-y-8">
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic">Lista de la Compra</h2>
+                <button onclick="openModal('shopping')" class="bg-emerald-600 text-white p-3 rounded-2xl shadow-lg shadow-emerald-100"><i data-lucide="plus"></i></button>
+            </div>
+            <div class="bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden">
+                <div id="shopping-list" class="divide-y divide-slate-50">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Juegos -->
+        <div id="tab-juegos" class="tab-content hidden space-y-8">
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic">Propuestas Lúdicas</h2>
+                <button onclick="openModal('activity')" class="bg-emerald-600 text-white p-3 rounded-2xl shadow-lg shadow-emerald-100"><i data-lucide="plus"></i></button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="activities-list">
+                <!-- Dinámico -->
+            </div>
+        </div>
+
+        <!-- Tab: Coches -->
+        <div id="tab-coches" class="tab-content hidden space-y-8">
+            <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic">Logística Coches</h2>
+            <div class="grid grid-cols-1 gap-4" id="cars-list">
+                <!-- Dinámico -->
+            </div>
+        </div>
+
+        <!-- Tab: Notas -->
+        <div id="tab-notas" class="tab-content hidden space-y-8">
+            <div class="flex justify-between items-center">
+                <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic">Muro de Avisos</h2>
+                <button onclick="openModal('note')" class="bg-indigo-600 text-white p-3 rounded-2xl shadow-lg shadow-indigo-100"><i data-lucide="send"></i></button>
+            </div>
+            <div class="space-y-4" id="notes-list">
+                <!-- Dinámico -->
+            </div>
+        </div>
+
+    </main>
+
+    <div id="action-modal" class="fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6 hidden">
+        <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-md shadow-2xl">
+            <h3 id="modal-title" class="text-2xl font-black text-slate-900 mb-6 italic">Añadir</h3>
+            <div id="modal-fields" class="space-y-4">
+                <!-- Inyectado -->
+            </div>
+            <div class="flex gap-3 mt-8">
+                <button onclick="closeModal()" class="flex-1 bg-slate-100 text-slate-500 font-bold py-4 rounded-2xl">Cancelar</button>
+                <button id="modal-save-btn" class="flex-1 bg-emerald-600 text-white font-black py-4 rounded-2xl shadow-lg shadow-emerald-100">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = localStorage.getItem('rural_user');
+        
+        const menuData = [
+            { dia: "Viernes 06", comida: "Cena", responsable: "Giacomo", fregado: "Guillermo / Ferran", desc: "Picoteo bienvenida" },
+            { dia: "Sábado 07", comida: "Desayuno", responsable: "Jonas", fregado: "Gabriel", desc: "Buffet libre" },
+            { dia: "Sábado 07", comida: "Comida", responsable: "Gabriel / Elvin", fregado: "Gábor / +1", desc: "El Gran Asado" },
+            { dia: "Sábado 07", comida: "Cena", responsable: "Giacomo", fregado: "Víctor / Luis", desc: "Hamburguesas/Sobras" },
+            { dia: "Domingo 08", comida: "Desayuno", responsable: "Guillermo", fregado: "Nico", desc: "Desayuno recuperación" },
+            { dia: "Domingo 08", comida: "Comida", responsable: "Jordi", fregado: "Todos", desc: "La Paella final" }
+        ];
+
+        let shoppingItems = JSON.parse(localStorage.getItem('rural_shopping')) || [
+            { id: 1, user: "Jordi", text: "Hielo (mucho)", checked: false },
+            { id: 2, user: "Giacomo", text: "Carbón y pastillas encendido", checked: false },
+            { id: 3, user: "Gabriel", text: "Sal y Aceite", checked: true }
+        ];
+
+        let activities = JSON.parse(localStorage.getItem('rural_activities')) || [
+            { id: 1, user: "Organizador", title: "Torneo de Póker", desc: "Traed vuestros maletines de fichas." },
+            { id: 2, user: "Organizador", title: "Piscina y Chill", desc: "Bañador obligatorio." }
+        ];
+
+        let notes = JSON.parse(localStorage.getItem('rural_notes')) || [
+            { id: 1, user: "Jordi", text: "La casa tiene sábanas pero traed toallas.", time: "Hace 1h" }
+        ];
+
+        function checkLogin() {
+            if (!currentUser) {
+                document.getElementById('login-overlay').classList.remove('hidden');
+            } else {
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('display-username').innerText = currentUser;
+                renderAll();
+            }
+        }
+
+        function login() {
+            const name = document.getElementById('username-input').value.trim();
+            if (name) {
+                localStorage.setItem('rural_user', name);
+                currentUser = name;
+                checkLogin();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('rural_user');
+            location.reload();
+        }
+
+        function renderAll() {
+            renderMenu();
+            renderShopping();
+            renderActivities();
+            renderNotes();
+            renderCars();
+            lucide.createIcons();
+        }
+
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = menuData.map(m => `
+                <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm">
+                    <p class="text-[9px] font-black text-emerald-600 uppercase tracking-widest mb-2">${m.dia} • ${m.comida}</p>
+                    <h4 class="font-black text-slate-800 text-lg leading-tight mb-1">${m.responsable}</h4>
+                    <p class="text-xs text-slate-400 italic mb-4">${m.desc}</p>
+                    <div class="flex items-center gap-2 bg-slate-50 p-3 rounded-2xl">
+                        <i data-lucide="droplets" class="w-3 h-3 text-blue-400"></i>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase">Fregar: ${m.fregado}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderShopping() {
+            const container = document.getElementById('shopping-list');
+            if (shoppingItems.length === 0) {
+                container.innerHTML = '<div class="p-10 text-center text-slate-400 text-sm italic">No hay nada en la lista...</div>';
+                return;
+            }
+            container.innerHTML = shoppingItems.map(item => `
+                <div class="flex items-center justify-between p-5 hover:bg-slate-50 transition-colors">
+                    <div class="flex items-center gap-4 cursor-pointer flex-1" onclick="toggleShopping(${item.id})">
+                        <div class="w-6 h-6 rounded-lg border-2 ${item.checked ? 'bg-emerald-500 border-emerald-500' : 'border-slate-200'} flex items-center justify-center transition-all">
+                            ${item.checked ? '<i data-lucide="check" class="text-white w-4 h-4"></i>' : ''}
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-700 ${item.checked ? 'item-checked' : ''}">${item.text}</p>
+                            <p class="text-[9px] text-slate-400 uppercase font-black tracking-tighter">Añadido por: ${item.user}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteShopping(${item.id})" class="text-slate-300 hover:text-rose-500 p-2"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function toggleShopping(id) {
+            const item = shoppingItems.find(i => i.id === id);
+            if (item) {
+                item.checked = !item.checked;
+                localStorage.setItem('rural_shopping', JSON.stringify(shoppingItems));
+                renderShopping();
+            }
+        }
+
+        function deleteShopping(id) {
+            shoppingItems = shoppingItems.filter(i => i.id !== id);
+            localStorage.setItem('rural_shopping', JSON.stringify(shoppingItems));
+            renderShopping();
+        }
+
+        function renderActivities() {
+            const container = document.getElementById('activities-list');
+            container.innerHTML = activities.map(a => `
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm activity-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="bg-emerald-50 text-emerald-600 p-2 rounded-xl"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
+                        <span class="text-[9px] font-black text-slate-300 uppercase tracking-tighter">Proponente: ${a.user}</span>
+                    </div>
+                    <h4 class="font-black text-slate-800 mb-1">${a.title}</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">${a.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notes-list');
+            container.innerHTML = notes.slice().reverse().map(n => `
+                <div class="bg-white p-5 rounded-2xl border-l-4 border-indigo-500 shadow-sm">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-black text-slate-800 text-xs">${n.user}</span>
+                        <span class="text-[9px] text-slate-300">${n.time || ''}</span>
+                    </div>
+                    <p class="text-sm text-slate-600 italic">"${n.text}"</p>
+                </div>
+            `).join('');
+        }
+
+        function renderCars() {
+            const container = document.getElementById('cars-list');
+            const data = [
+                { host: "Elvin", time: "14:00", p: ["Mikel", "Giacomo", "Gabriel"] },
+                { host: "Iban", time: "15:00", p: ["Michele", "Albert Gemelos", "Luis", "Rubén"] },
+                { host: "Víctor", time: "18:00", p: ["Ferran", "Nico", "Gábor"] }
+            ];
+            container.innerHTML = data.map(c => `
+                <div class="bg-white p-6 rounded-[1.5rem] border border-slate-100 shadow-sm flex gap-4 items-center">
+                    <div class="w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="car"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h4 class="font-black text-slate-800 text-sm uppercase">Coche ${c.host}</h4>
+                            <span class="bg-indigo-100 text-indigo-700 text-[8px] px-2 py-0.5 rounded-full font-black uppercase">Salida ${c.time}</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Con: ${c.p.join(', ')}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        let modalMode = '';
+
+        function openModal(mode) {
+            modalMode = mode;
+            const modal = document.getElementById('action-modal');
+            const fields = document.getElementById('modal-fields');
+            const title = document.getElementById('modal-title');
+            
+            modal.classList.remove('hidden');
+            if (mode === 'shopping') {
+                title.innerText = "Añadir a la Compra";
+                fields.innerHTML = `<input id="inp-1" class="w-full bg-slate-50 p-4 rounded-xl border border-slate-100 outline-none font-bold" placeholder="¿Qué falta comprar?">`;
+            } else if (mode === 'activity') {
+                title.innerText = "Proponer Actividad";
+                fields.innerHTML = `
+                    <input id="inp-1" class="w-full bg-slate-50 p-4 rounded-xl outline-none border border-slate-100 font-bold" placeholder="Nombre del juego/actividad">
+                    <textarea id="inp-2" class="w-full bg-slate-50 p-4 rounded-xl outline-none border border-slate-100 text-sm" placeholder="Descripción breve..." rows="3"></textarea>
+                `;
+            } else {
+                title.innerText = "Dejar una nota";
+                fields.innerHTML = `<textarea id="inp-1" class="w-full bg-slate-50 p-4 rounded-xl outline-none border border-slate-100 text-sm" placeholder="Escribe aquí..." rows="4"></textarea>`;
+            }
+            document.getElementById('modal-save-btn').onclick = saveAction;
+        }
+
+        function closeModal() {
+            document.getElementById('action-modal').classList.add('hidden');
+        }
+
+        function saveAction() {
+            const val1 = document.getElementById('inp-1').value.trim();
+            if(!val1) return;
+
+            if (modalMode === 'shopping') {
+                shoppingItems.push({ id: Date.now(), user: currentUser, text: val1, checked: false });
+                localStorage.setItem('rural_shopping', JSON.stringify(shoppingItems));
+            } else if (modalMode === 'activity') {
+                const val2 = document.getElementById('inp-2').value;
+                activities.push({ id: Date.now(), user: currentUser, title: val1, desc: val2 });
+                localStorage.setItem('rural_activities', JSON.stringify(activities));
+            } else {
+                notes.push({ id: Date.now(), user: currentUser, text: val1, time: "Recién" });
+                localStorage.setItem('rural_notes', JSON.stringify(notes));
+            }
+            renderAll();
+            closeModal();
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('nav button').forEach(el => {
+                el.classList.add('text-slate-400');
+                el.classList.remove('text-emerald-700', 'tab-active');
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const btn = document.getElementById('btn-' + tabId);
+            btn.classList.remove('text-slate-400');
+            btn.classList.add('text-emerald-700', 'tab-active');
+            lucide.createIcons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Cuenta atrás para el 6 de Junio de 2026
+        const countdownDate = new Date("Jun 6, 2026 18:00:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const display = `${days}d : ${hours}h`;
+            const el = document.getElementById("countdown");
+            if(el) el.innerText = distance < 0 ? "¡YA!" : display;
+        }
+
+        setInterval(updateCountdown, 3600000);
+        updateCountdown();
+        checkLogin();
+        showTab('ruta');
+    </script>
+</body>
+</html>
