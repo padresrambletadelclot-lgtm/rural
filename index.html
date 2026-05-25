@@ -1,194 +1,744 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Can Ribes 2026 Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finde Rural - Can Ribes 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; -webkit-tap-highlight-color: transparent; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .tab-btn.active { color: #059669; border-bottom: 3px solid #059669; }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
-        .checked { text-decoration: line-through; opacity: 0.5; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
+        .tab-active { border-bottom: 3px solid #059669; color: #059669; }
+        .card-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 8px 10px -6px rgba(0, 0, 0, 0.03); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="pb-24">
+<body class="pb-32 bg-slate-50 text-slate-800">
 
-    <div id="login-overlay" class="fixed inset-0 z-[100] bg-emerald-950 flex items-center justify-center p-6">
-        <div class="bg-white rounded-[2.5rem] p-8 w-full max-w-sm shadow-2xl text-center">
-            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
-                <i data-lucide="trees" class="w-10 h-10"></i>
+    <!-- Pantalla de Login / Identificación -->
+    <div id="login-overlay" class="fixed inset-0 bg-slate-900/90 backdrop-blur-md z-[100] flex items-center justify-center p-6">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-100 text-center space-y-6">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
+                <i data-lucide="trees" class="w-8 h-8"></i>
             </div>
-            <h2 class="text-3xl font-black text-slate-900 mb-2 italic">Can Ribes</h2>
-            <p class="text-sm text-slate-500 mb-8 font-medium">Introduce tu nombre para entrar al hub del grupo.</p>
-            <input type="text" id="username-input" class="w-full bg-slate-100 border-none rounded-2xl p-5 mb-4 focus:ring-2 focus:ring-emerald-500 outline-none font-bold text-center" placeholder="Tu nombre...">
-            <button onclick="login()" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-lg active:scale-95 transition-transform">Entrar al Hub</button>
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900">¿Quién eres?</h2>
+                <p class="text-sm text-slate-500 mt-1">Escribe tu nombre para identificarte en el viaje de Can Ribes.</p>
+            </div>
+            <div class="space-y-4">
+                <select id="user-select" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="" disabled selected>Selecciona tu nombre...</option>
+                    <option value="Jordi">Jordi</option>
+                    <option value="Pako Espi">Pako Espi</option>
+                    <option value="Ruben">Ruben</option>
+                    <option value="Giacomo">Giacomo</option>
+                    <option value="Luis">Luis</option>
+                    <option value="Gabriel">Gabriel</option>
+                    <option value="Michele">Michele</option>
+                    <option value="Jonas">Jonas</option>
+                    <option value="Elvin">Elvin</option>
+                    <option value="Albert">Albert</option>
+                    <option value="Guillermo">Guillermo</option>
+                    <option value="Víctor">Víctor</option>
+                    <option value="Gábor">Gábor</option>
+                    <option value="Iban">Iban</option>
+                    <option value="Ferran">Ferran</option>
+                    <option value="Nico">Nico</option>
+                    <option value="Cristian">Cristian</option>
+                    <option value="Mikel">Mikel</option>
+                    <option value="Alex">Alex</option>
+                </select>
+                <button onclick="saveUser()" class="w-full h-12 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-500 transition-colors shadow-lg shadow-emerald-600/20 active:scale-95 transition-transform text-sm">
+                    Entrar al Organizador
+                </button>
+            </div>
         </div>
     </div>
 
-    <header class="bg-emerald-950 text-white pt-12 pb-20 px-6 rounded-b-[3.5rem] relative overflow-hidden shadow-2xl">
+    <!-- Header & Hero -->
+    <header class="bg-emerald-900 text-white pt-12 pb-24 px-6 rounded-b-[3rem] relative overflow-hidden shadow-lg">
         <div class="max-w-4xl mx-auto relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-6">
+            <div class="flex justify-between items-start">
                 <div>
-                    <span class="bg-emerald-800 text-emerald-200 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">6 - 8 Junio 2026</span>
-                    <h1 class="text-5xl font-extrabold mt-4 tracking-tight italic">Can Ribes <span class="text-emerald-400 font-light text-3xl block">Summer Hub</span></h1>
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <a href="https://www.google.com/maps/place/Can+Ribes+Turisme+Rural" target="_blank" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 p-2 pr-4 rounded-xl text-xs backdrop-blur-md transition-all">
-                            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> Santa Maria de Camós
-                        </a>
+                    <span class="bg-emerald-800 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Escapada Rural</span>
+                    <h1 class="text-4xl md:text-5xl font-extrabold mt-4 tracking-tight">Can Ribes <br><span class="text-emerald-400">Junio 2026</span></h1>
+                    <div class="mt-6 space-y-2">
+                        <p class="text-emerald-100 flex items-center gap-2 text-sm">
+                            <i data-lucide="calendar" class="w-4 h-4 text-emerald-400"></i> Viernes 6 al Domingo 8 de Junio, 2026
+                        </p>
+                        <p class="text-emerald-100 flex items-center gap-2 text-sm">
+                            <i data-lucide="users" class="w-4 h-4 text-emerald-400"></i> 19 Participantes
+                        </p>
                     </div>
                 </div>
-                <div class="bg-white/10 backdrop-blur-lg p-5 rounded-[2rem] border border-white/10 text-center min-w-[140px]">
-                    <p class="text-[9px] uppercase font-black text-emerald-300 mb-1">Faltan</p>
-                    <div id="countdown" class="text-xl font-black tabular-nums">00d : 00h</div>
+                <div class="hidden md:block bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-center">
+                    <p class="text-xs uppercase font-bold text-emerald-300 mb-2 tracking-tighter">Cuenta Atrás</p>
+                    <div id="countdown" class="text-2xl font-black tabular-nums">00d : 00h : 00m</div>
                 </div>
             </div>
+            <div class="mt-6 flex items-center gap-2 text-xs text-emerald-200 bg-emerald-950/40 p-2.5 rounded-xl w-fit">
+                <i data-lucide="user" class="w-4 h-4 text-emerald-400"></i>
+                <span>Usuario actual: <strong id="current-user-display" class="text-white">Invitado</strong></span>
+                <button onclick="logout()" class="ml-2 text-emerald-400 underline hover:text-emerald-200">Cambiar</button>
+            </div>
         </div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-700/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
     </header>
 
-    <nav class="max-w-4xl mx-auto -mt-10 px-4 sticky top-4 z-50">
-        <div class="bg-white/90 glass rounded-[2rem] shadow-2xl p-2 flex justify-between overflow-x-auto no-scrollbar border border-slate-200/50">
-            <button onclick="showTab('ruta')" id="btn-ruta" class="tab-btn active flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1">
-                <i data-lucide="map" class="w-5 h-5"></i><span>RUTA</span>
+    <!-- Navegación -->
+    <nav class="max-w-4xl mx-auto -mt-10 px-4 sticky top-4 z-40">
+        <div class="bg-white rounded-2xl shadow-xl p-2 flex justify-between overflow-x-auto no-scrollbar border border-slate-100">
+            <button onclick="showTab('itinerario')" id="btn-itinerario" class="flex-1 py-3 px-3 text-xs font-bold flex flex-col items-center gap-1 transition-all">
+                <i data-lucide="map" class="w-5 h-5"></i><span>Ruta</span>
             </button>
-            <button onclick="showTab('menu')" id="btn-menu" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
-                <i data-lucide="utensils" class="w-5 h-5"></i><span>MENÚ</span>
+            <button onclick="showTab('comidas')" id="btn-comidas" class="flex-1 py-3 px-3 text-xs font-bold flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="utensils" class="w-5 h-5"></i><span>Menú</span>
             </button>
-            <button onclick="showTab('compra')" id="btn-compra" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
-                <i data-lucide="shopping-bag" class="w-5 h-5"></i><span>COMPRA</span>
+            <button onclick="showTab('compra')" id="btn-compra" class="flex-1 py-3 px-3 text-xs font-bold flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="shopping-cart" class="w-5 h-5"></i><span>Compra</span>
             </button>
-            <button onclick="showTab('actividades')" id="btn-actividades" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
-                <i data-lucide="dices" class="w-5 h-5"></i><span>JUEGOS</span>
+            <button onclick="showTab('actividades')" id="btn-actividades" class="flex-1 py-3 px-3 text-xs font-bold flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="dice-5" class="w-5 h-5"></i><span>Juegos</span>
             </button>
-            <button onclick="showTab('gastos')" id="btn-gastos" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
-                <i data-lucide="wallet" class="w-5 h-5"></i><span>GASTOS</span>
+            <button onclick="showTab('coches')" id="btn-coches" class="flex-1 py-3 px-3 text-xs font-bold flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="car" class="w-5 h-5"></i><span>Coches</span>
             </button>
-            <button onclick="showTab('musica')" id="btn-musica" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
-                <i data-lucide="music" class="w-5 h-5"></i><span>MÚSICA</span>
+            <button onclick="showTab('gastos')" id="btn-gastos" class="flex-1 py-3 px-3 text-xs font-bold flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="wallet" class="w-5 h-5"></i><span>Gastos</span>
             </button>
-            <button onclick="showTab('coches')" id="btn-coches" class="tab-btn flex-1 py-4 px-2 text-[10px] font-black flex flex-col items-center gap-1 text-slate-400">
-                <i data-lucide="car" class="w-5 h-5"></i><span>COCHES</span>
+            <button onclick="showTab('musica')" id="btn-musica" class="flex-1 py-3 px-3 text-xs font-bold flex flex-col items-center gap-1 transition-all text-slate-400">
+                <i data-lucide="music" class="w-5 h-5"></i><span>Playlist</span>
             </button>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-6 mt-4">
-        <!-- Tab: Ruta -->
-        <section id="tab-ruta" class="tab-content active space-y-8">
-            <h2 class="text-3xl font-black text-slate-900 italic">Itinerario</h2>
-            <div class="space-y-6 border-l-4 border-emerald-100 ml-4 pl-8">
-                <div class="relative pb-6">
-                    <div class="absolute -left-[2.6rem] top-0 w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-black text-xs">V</div>
-                    <p class="text-[10px] font-black text-indigo-500 uppercase tracking-widest">Viernes 06 Junio</p>
-                    <h4 class="font-bold text-slate-800">Llegada a Can Ribes (18:00)</h4>
-                    <p class="text-xs text-slate-500 italic">Reparto de camas y cena Giacomo.</p>
+    <!-- Contenido Principal -->
+    <main class="max-w-4xl mx-auto p-4 md:p-6 mt-4">
+
+        <!-- TAB 1: ITINERARIO -->
+        <div id="tab-itinerario" class="tab-content space-y-8">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">Cronograma General</h2>
+                <span class="text-xs font-black text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider">Can Ribes</span>
+            </div>
+
+            <!-- Viernes -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold shadow-lg shadow-indigo-100">06</div>
+                    <div>
+                        <h3 class="font-extrabold text-slate-800">Viernes, 6 de Junio</h3>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Inicio del Viaje</p>
+                    </div>
                 </div>
-                <div class="relative pb-6">
-                    <div class="absolute -left-[2.6rem] top-0 w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-black text-xs">S</div>
-                    <p class="text-[10px] font-black text-orange-500 uppercase tracking-widest">Sábado 07 Junio</p>
-                    <h4 class="font-bold text-slate-800">Día de Asado</h4>
-                    <p class="text-xs text-slate-500 italic">Piscina, juegos y el gran asado de Gabriel/Elvin.</p>
-                </div>
-                <div class="relative">
-                    <div class="absolute -left-[2.6rem] top-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-black text-xs">D</div>
-                    <p class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Domingo 08 Junio</p>
-                    <h4 class="font-bold text-slate-800">Paella Jordi & Despedida</h4>
-                    <p class="text-xs text-slate-500 italic">Brunch Guillermo y recogida.</p>
+                <div class="border-l-2 border-slate-200 ml-5 pl-8 space-y-8 pb-4">
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-indigo-500"></div>
+                        <p class="text-[10px] font-bold text-indigo-500 uppercase">14:00 - 18:00</p>
+                        <h4 class="font-bold text-slate-800">Llegadas Escalonadas</h4>
+                        <p class="text-sm text-slate-500">Salidas coordinadas en coche (14h, 15h, 18h). Recibimiento en Can Ribes (Camós, Girona), reparto de camas y acomodación.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-slate-300"></div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">21:30</p>
+                        <h4 class="font-bold text-slate-800">Cena de Bienvenida</h4>
+                        <p class="text-sm text-slate-500">Giacomo se encarga de la cena. Friegan platos: Guillermo y Ferran.</p>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <section id="tab-menu" class="tab-content space-y-6">
-            <h2 class="text-3xl font-black text-slate-900 italic">Gastronomía</h2>
-            <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-        </section>
+            <!-- Sábado -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold shadow-lg shadow-orange-100">07</div>
+                    <div>
+                        <h3 class="font-extrabold text-slate-800">Sábado, 7 de Junio</h3>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Día de Convivencia</p>
+                    </div>
+                </div>
+                <div class="border-l-2 border-slate-200 ml-5 pl-8 space-y-8 pb-4">
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-orange-500"></div>
+                        <p class="text-[10px] font-bold text-orange-500 uppercase">10:00</p>
+                        <h4 class="font-bold text-slate-800">Desayuno Completo</h4>
+                        <p class="text-sm text-slate-500">Preparado por Jonas. Fria platos: Gabriel.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-slate-300"></div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">11:30 - 13:30</p>
+                        <h4 class="font-bold text-slate-800">Actividades Lúdicas / Torneos</h4>
+                        <p class="text-sm text-slate-500">Consulta los torneos o propone actividades en la pestaña "Juegos".</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-slate-300"></div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">14:30</p>
+                        <h4 class="font-bold text-slate-800">Asado Tradicional</h4>
+                        <p class="text-sm text-slate-500">Cocinan: Gabriel y Elvin. Friegan platos: Gábor y +1.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-slate-300"></div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">21:30</p>
+                        <h4 class="font-bold text-slate-800">Cena Ligera</h4>
+                        <p class="text-sm text-slate-500">Preparado por Giacomo. Friegan platos: Víctor y Luis.</p>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Tab: Compra -->
-        <section id="tab-compra" class="tab-content space-y-6">
+            <!-- Domingo -->
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-lg shadow-emerald-100">08</div>
+                    <div>
+                        <h3 class="font-extrabold text-slate-800">Domingo, 8 de Junio</h3>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Cierre</p>
+                    </div>
+                </div>
+                <div class="border-l-2 border-slate-200 ml-5 pl-8 space-y-8">
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-emerald-500"></div>
+                        <p class="text-[10px] font-bold text-emerald-500 uppercase">10:00</p>
+                        <h4 class="font-bold text-slate-800">Desayuno</h4>
+                        <p class="text-sm text-slate-500">Preparado por Guillermo. Fria platos: Nico.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-slate-300"></div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">14:30</p>
+                        <h4 class="font-bold text-slate-800">Comida: Gran Paella</h4>
+                        <p class="text-sm text-slate-500">Cocina: Jordi. Fregado colectivo antes de partir.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="absolute -left-[2.35rem] top-1 w-4 h-4 rounded-full bg-white border-4 border-rose-500"></div>
+                        <p class="text-[10px] font-bold text-rose-500 uppercase">17:00</p>
+                        <h4 class="font-bold text-slate-800">Despedida de Can Ribes</h4>
+                        <p class="text-sm text-slate-500">Foto de familia, revisión de pertenencias y regreso coordinado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: MENÚ -->
+        <div id="tab-comidas" class="tab-content hidden space-y-6">
             <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900 italic">Lista Compra</h2>
-                <button onclick="openModal('compra')" class="bg-emerald-600 text-white p-4 rounded-3xl shadow-xl active:scale-95 transition-transform">
-                    <i data-lucide="plus"></i>
+                <h2 class="text-2xl font-extrabold text-slate-800">Plan de Comidas</h2>
+                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase">Sincronizado</span>
+            </div>
+
+            <!-- Viernes Cena -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 card-shadow space-y-4">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="moon" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-indigo-500 uppercase">Viernes Cena</span>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Responsable: Giacomo</h3>
+                        </div>
+                    </div>
+                    <button onclick="openEditMenu('viernes_cena', 'Viernes Cena', 'Giacomo')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+                        <i data-lucide="edit" class="w-3.5 h-3.5"></i> Editar
+                    </button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <p class="text-xs text-slate-400 font-bold uppercase mb-1">Platos y Elaboración:</p>
+                    <p id="menu-dishes-viernes_cena" class="text-sm font-semibold text-slate-700">Cargando...</p>
+                    <p class="text-xs text-slate-400 font-bold uppercase mt-3 mb-1">Ingredientes añadidos a compra:</p>
+                    <p id="menu-ing-viernes_cena" class="text-xs text-slate-500 italic">Ninguno</p>
+                </div>
+                <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-3">
+                    <span class="flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Fregar: <strong>Guillermo / Ferran</strong></span>
+                </div>
+            </div>
+
+            <!-- Sábado Desayuno -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 card-shadow space-y-4">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="sun" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-amber-600 uppercase">Sábado Desayuno</span>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Responsable: Jonas</h3>
+                        </div>
+                    </div>
+                    <button onclick="openEditMenu('sabado_desayuno', 'Sábado Desayuno', 'Jonas')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+                        <i data-lucide="edit" class="w-3.5 h-3.5"></i> Editar
+                    </button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <p class="text-xs text-slate-400 font-bold uppercase mb-1">Platos y Elaboración:</p>
+                    <p id="menu-dishes-sabado_desayuno" class="text-sm font-semibold text-slate-700">Cargando...</p>
+                    <p class="text-xs text-slate-400 font-bold uppercase mt-3 mb-1">Ingredientes añadidos a compra:</p>
+                    <p id="menu-ing-sabado_desayuno" class="text-xs text-slate-500 italic">Ninguno</p>
+                </div>
+                <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-3">
+                    <span class="flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Fregar: <strong>Gabriel</strong></span>
+                </div>
+            </div>
+
+            <!-- Sábado Comida (Asado) -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 card-shadow space-y-4 border-l-4 border-l-orange-500">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="flame" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-orange-500 uppercase">Sábado Comida</span>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Responsables: Gabriel / Elvin</h3>
+                        </div>
+                    </div>
+                    <button onclick="openEditMenu('sabado_comida', 'Sábado Comida', 'Gabriel / Elvin')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+                        <i data-lucide="edit" class="w-3.5 h-3.5"></i> Editar
+                    </button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <p class="text-xs text-slate-400 font-bold uppercase mb-1">Platos y Elaboración:</p>
+                    <p id="menu-dishes-sabado_comida" class="text-sm font-semibold text-slate-700">Cargando...</p>
+                    <p class="text-xs text-slate-400 font-bold uppercase mt-3 mb-1">Ingredientes añadidos a compra:</p>
+                    <p id="menu-ing-sabado_comida" class="text-xs text-slate-500 italic">Ninguno</p>
+                </div>
+                <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-3">
+                    <span class="flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Fregar: <strong>Gábor / +1</strong></span>
+                </div>
+            </div>
+
+            <!-- Sábado Cena -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 card-shadow space-y-4">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-100 text-slate-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="moon" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Sábado Cena</span>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Responsable: Giacomo</h3>
+                        </div>
+                    </div>
+                    <button onclick="openEditMenu('sabado_cena', 'Sábado Cena', 'Giacomo')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+                        <i data-lucide="edit" class="w-3.5 h-3.5"></i> Editar
+                    </button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <p class="text-xs text-slate-400 font-bold uppercase mb-1">Platos y Elaboración:</p>
+                    <p id="menu-dishes-sabado_cena" class="text-sm font-semibold text-slate-700">Cargando...</p>
+                    <p class="text-xs text-slate-400 font-bold uppercase mt-3 mb-1">Ingredientes añadidos a compra:</p>
+                    <p id="menu-ing-sabado_cena" class="text-xs text-slate-500 italic">Ninguno</p>
+                </div>
+                <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-3">
+                    <span class="flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Fregar: <strong>Víctor / Luis</strong></span>
+                </div>
+            </div>
+
+            <!-- Domingo Desayuno -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 card-shadow space-y-4">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="coffee" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-amber-500 uppercase">Domingo Desayuno</span>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Responsable: Guillermo</h3>
+                        </div>
+                    </div>
+                    <button onclick="openEditMenu('domingo_desayuno', 'Domingo Desayuno', 'Guillermo')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+                        <i data-lucide="edit" class="w-3.5 h-3.5"></i> Editar
+                    </button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <p class="text-xs text-slate-400 font-bold uppercase mb-1">Platos y Elaboración:</p>
+                    <p id="menu-dishes-domingo_desayuno" class="text-sm font-semibold text-slate-700">Cargando...</p>
+                    <p class="text-xs text-slate-400 font-bold uppercase mt-3 mb-1">Ingredientes añadidos a compra:</p>
+                    <p id="menu-ing-domingo_desayuno" class="text-xs text-slate-500 italic">Ninguno</p>
+                </div>
+                <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-3">
+                    <span class="flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Fregar: <strong>Nico</strong></span>
+                </div>
+            </div>
+
+            <!-- Domingo Comida (Paella) -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 card-shadow space-y-4 border-l-4 border-l-emerald-500">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="soup" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-bold text-emerald-500 uppercase">Domingo Comida</span>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Responsable: Jordi (Paella)</h3>
+                        </div>
+                    </div>
+                    <button onclick="openEditMenu('domingo_comida', 'Domingo Comida', 'Jordi')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1">
+                        <i data-lucide="edit" class="w-3.5 h-3.5"></i> Editar
+                    </button>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <p class="text-xs text-slate-400 font-bold uppercase mb-1">Platos y Elaboración:</p>
+                    <p id="menu-dishes-domingo_comida" class="text-sm font-semibold text-slate-700">Cargando...</p>
+                    <p class="text-xs text-slate-400 font-bold uppercase mt-3 mb-1">Ingredientes añadidos a compra:</p>
+                    <p id="menu-ing-domingo_comida" class="text-xs text-slate-500 italic">Ninguno</p>
+                </div>
+                <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-100 pt-3">
+                    <span class="flex items-center gap-1"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Fregar: <strong>Colectivo / Todos</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: COMPRA (CATEGORIZADA POR MENÚ + GENERAL) -->
+        <div id="tab-compra" class="tab-content hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-extrabold text-slate-800">Lista de la Compra</h2>
+                <button onclick="openAddGeneralItemModal()" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 hover:bg-emerald-500 active:scale-95 transition-transform">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Añadir Gral
                 </button>
             </div>
-            <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden divide-y divide-slate-50" id="shopping-list"></div>
-        </section>
 
-        <section id="tab-actividades" class="tab-content space-y-6">
-            <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900 italic">Actividades Lúdicas</h2>
-                <button onclick="openModal('actividades')" class="bg-orange-500 text-white p-4 rounded-3xl shadow-xl active:scale-95 transition-transform">
-                    <i data-lucide="plus"></i>
-                </button>
+            <!-- Contenedor Dinámico Categorizado de Compra -->
+            <div id="compra-categories-wrapper" class="space-y-6">
+                <!-- Se inyectarán dinámicamente las compras separadas por Menú / General -->
+                <p class="text-sm text-slate-500 italic text-center py-8">Cargando artículos...</p>
             </div>
-            <div id="actividades-container" class="grid grid-cols-1 gap-6"></div>
-        </section>
+        </div>
 
-        <section id="tab-gastos" class="tab-content space-y-6">
-            <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900 italic">Gastos & Cuentas</h2>
-                <button onclick="openModal('gastos')" class="bg-emerald-600 text-white p-4 rounded-3xl shadow-xl active:scale-95 transition-transform">
-                    <i data-lucide="plus"></i>
+        <!-- TAB 4: JUEGOS Y ACTIVIDADES -->
+        <div id="tab-actividades" class="tab-content hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-extrabold text-slate-800">Juegos y Torneos</h2>
+                <button onclick="openAddActivityModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95 transition-transform">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Proponer Juego
                 </button>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-indigo-600 text-white p-5 rounded-[2rem] shadow-lg">
-                    <p class="text-[10px] font-black opacity-80 uppercase">Total Gastado</p>
-                    <p id="total-spent" class="text-2xl font-black">0.00€</p>
+            <div id="activities-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Inyección dinámica de actividades -->
+                <p class="text-sm text-slate-500 italic col-span-2 text-center py-8">Cargando propuestas...</p>
+            </div>
+        </div>
+
+        <!-- TAB 5: COCHES -->
+        <div id="tab-coches" class="tab-content hidden space-y-6">
+            <h2 class="text-2xl font-extrabold text-slate-800">Distribución de Coches</h2>
+            <p class="text-xs text-slate-500 italic -mt-4">Planes fijos de salida organizados por conductor.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Coche Elvin -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 card-shadow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="car" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-bold text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded uppercase">Salida: 14:00h</span>
+                            <h4 class="font-extrabold text-slate-800 text-sm mt-1">Coche de Elvin</h4>
+                        </div>
+                    </div>
+                    <div class="space-y-2 border-t border-slate-100 pt-3">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Pasajeros:</p>
+                        <ul class="space-y-1.5">
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>1. Mikel</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>2. Giacomo</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>3. Gabriel</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="bg-emerald-600 text-white p-5 rounded-[2rem] shadow-lg">
-                    <p class="text-[10px] font-black opacity-80 uppercase">Por Persona (19)</p>
-                    <p id="per-person" class="text-2xl font-black">0.00€</p>
+
+                <!-- Coche Iban -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 card-shadow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="car" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-bold text-amber-500 bg-amber-50 px-2 py-0.5 rounded uppercase">Salida: 15:00h</span>
+                            <h4 class="font-extrabold text-slate-800 text-sm mt-1">Coche de Iban</h4>
+                        </div>
+                    </div>
+                    <div class="space-y-2 border-t border-slate-100 pt-3">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Pasajeros:</p>
+                        <ul class="space-y-1.5">
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>1. Michele</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>2. Albert (gemelos)</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>3. Luis</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>4. Rubén</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Coche Víctor -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 card-shadow space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="car" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="text-[9px] font-bold text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded uppercase">Salida: 18:00h</span>
+                            <h4 class="font-extrabold text-slate-800 text-sm mt-1">Coche de Víctor</h4>
+                        </div>
+                    </div>
+                    <div class="space-y-2 border-t border-slate-100 pt-3">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase">Pasajeros:</p>
+                        <ul class="space-y-1.5">
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>1. Ferran</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>2. Nico</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                            <li class="text-xs font-semibold text-slate-700 bg-slate-50 p-2 rounded-lg flex items-center justify-between">
+                                <span>3. Gábor</span><span class="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded">Pasajero</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 6: GASTOS -->
+        <div id="tab-gastos" class="tab-content hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-extrabold text-slate-800">Cuentas Claras (19 pax)</h2>
+                <button onclick="openAddExpenseModal()" class="bg-emerald-600 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95 transition-transform shadow-lg shadow-emerald-600/20">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i> Añadir Gasto
+                </button>
+            </div>
+
+            <!-- Resumen Financiero -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 card-shadow flex items-center gap-4">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center"><i data-lucide="banknote"></i></div>
+                    <div>
+                        <span class="text-[9px] text-slate-400 uppercase font-black">Gasto Total Común</span>
+                        <p id="total-comun-cash" class="text-lg font-black text-slate-800">0.00€</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 card-shadow flex items-center gap-4">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center"><i data-lucide="calculator"></i></div>
+                    <div>
+                        <span class="text-[9px] text-slate-400 uppercase font-black">Por Persona (19 pax)</span>
+                        <p id="total-per-capita" class="text-lg font-black text-slate-800">0.00€</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 card-shadow flex items-center gap-4">
+                    <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center"><i data-lucide="check-circle-2"></i></div>
+                    <div>
+                        <span class="text-[9px] text-slate-400 uppercase font-black">Gastos Justificados</span>
+                        <p id="total-justificados-count" class="text-lg font-black text-slate-800">0</p>
+                    </div>
                 </div>
             </div>
 
-            <div id="expenses-list" class="space-y-3"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Lista de Gastos -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 card-shadow space-y-4 md:col-span-2">
+                    <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-1.5"><i data-lucide="list" class="w-4 h-4 text-slate-400"></i> Historial de Gastos</h3>
+                    <div id="expenses-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-1">
+                        <p class="text-xs text-slate-400 italic text-center py-6">Cargando...</p>
+                    </div>
+                </div>
 
-            <h3 class="text-xl font-black text-slate-900 mt-8 mb-4 italic">Balance de Liquidación</h3>
-            <div id="settlement-list" class="bg-white rounded-[2.5rem] border border-slate-100 shadow-xl overflow-hidden divide-y divide-slate-50"></div>
-        </section>
+                <!-- Balance de Liquidación de los 19 miembros -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 card-shadow space-y-4">
+                    <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-1.5"><i data-lucide="scale" class="w-4 h-4 text-slate-400"></i> Balance Final</h3>
+                    <div id="member-balance-list" class="space-y-2.5 max-h-[400px] overflow-y-auto pr-1">
+                        <p class="text-xs text-slate-400 italic text-center py-6">Calculando...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Tab: Musica -->
-        <section id="tab-musica" class="tab-content space-y-6">
-            <div class="flex justify-between items-center">
-                <h2 class="text-3xl font-black text-slate-900 italic">Playlist</h2>
-                <button onclick="openModal('musica')" class="bg-indigo-600 text-white p-4 rounded-3xl shadow-xl active:scale-95 transition-transform">
-                    <i data-lucide="plus"></i>
+        <!-- TAB 7: PLAYLIST -->
+        <div id="tab-musica" class="tab-content hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-extrabold text-slate-800">Música del Viaje</h2>
+                <button onclick="openAddMusicModal()" class="bg-slate-900 text-white px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 active:scale-95 transition-transform">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Añadir Canción
                 </button>
             </div>
-            <div id="music-list" class="grid grid-cols-1 gap-3"></div>
-        </section>
 
-        <!-- Tab: Coches -->
-        <section id="tab-coches" class="tab-content space-y-6">
-            <h2 class="text-3xl font-black text-slate-900 italic">Coches</h2>
-            <div id="cars-container" class="grid grid-cols-1 gap-4"></div>
-        </section>
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 card-shadow space-y-4">
+                <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-1.5"><i data-lucide="music-4" class="w-4 h-4 text-slate-400"></i> Propuestas de Canciones y Enlaces</h3>
+                <div id="musica-list-container" class="space-y-3">
+                    <p class="text-sm text-slate-400 italic text-center py-6">Cargando playlist...</p>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <div id="modal" class="fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6 hidden">
-        <div class="bg-white rounded-[3rem] p-8 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto no-scrollbar">
-            <h3 id="modal-title" class="text-2xl font-black text-slate-900 mb-6 italic">Añadir</h3>
-            <div id="modal-fields" class="space-y-4"></div>
-            <div class="flex gap-3 mt-8">
-                <button onclick="closeModal()" class="flex-1 bg-slate-100 text-slate-500 font-bold py-5 rounded-2xl">Cancelar</button>
-                <button id="modal-save" class="flex-1 bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-lg">Guardar</button>
+    <!-- MODAL EDITAR MENÚ / PLATOS / INGREDIENTES -->
+    <div id="edit-menu-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-slate-100 shadow-2xl space-y-4 relative">
+            <button onclick="closeEditMenuModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div>
+                <span id="modal-menu-badge" class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase">Menú</span>
+                <h3 id="modal-menu-title" class="text-xl font-extrabold text-slate-800 mt-1">Editar Comida</h3>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Responsable</label>
+                    <input type="text" id="modal-menu-chef" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" disabled>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">¿Qué vamos a cocinar? (Platos / Elaboración)</label>
+                    <textarea id="modal-menu-dishes" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: Chorizo criollo, entraña, ensaladas de tomate, cebolla..."></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Ingredientes a añadir a la Compra (Separados por comas)</label>
+                    <textarea id="modal-menu-ingredients" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: carbón, patatas, carne, tomate, cebolla..."></textarea>
+                    <p class="text-[9px] text-slate-400 mt-1">Los ingredientes escritos aquí se añadirán automáticamente a la lista de la compra de forma categorizada bajo este menú.</p>
+                </div>
+            </div>
+            <div class="pt-2 flex gap-3">
+                <button onclick="closeEditMenuModal()" class="flex-1 h-11 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-bold transition-all">Cancelar</button>
+                <button onclick="saveMenu()" class="flex-1 h-11 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-emerald-600/20">Guardar Cambios</button>
             </div>
         </div>
     </div>
 
+    <!-- MODAL AÑADIR JUEGO / ACTIVIDAD -->
+    <div id="add-activity-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-slate-100 shadow-2xl space-y-4 relative">
+            <button onclick="closeAddActivityModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div>
+                <h3 class="text-xl font-extrabold text-slate-800">Proponer Juego / Actividad</h3>
+                <p class="text-xs text-slate-500 mt-1">Crea un torneo, partida o actividad lúdica para el fin de semana.</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Nombre de la actividad / Juego</label>
+                    <input type="text" id="act-title" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: Torneo de Póker / Excursión a Banyoles">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Horario estimado</label>
+                        <input type="text" id="act-time" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: Sábado Tarde (17:00)">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Lugar</label>
+                        <input type="text" id="act-place" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: Jardín / Salón">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Reglas / Descripción / Comentarios</label>
+                    <textarea id="act-desc" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Detalles de participación o reglas del juego..."></textarea>
+                </div>
+            </div>
+            <div class="pt-2 flex gap-3">
+                <button onclick="closeAddActivityModal()" class="flex-1 h-11 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-bold transition-all">Cancelar</button>
+                <button onclick="saveActivity()" class="flex-1 h-11 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-emerald-600/20">Publicar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AÑADIR GASTO -->
+    <div id="add-expense-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-slate-100 shadow-2xl space-y-4 relative">
+            <button onclick="closeAddExpenseModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div>
+                <h3 class="text-xl font-extrabold text-slate-800">Añadir un Gasto</h3>
+                <p class="text-xs text-slate-500 mt-1">Suma lo que hayas pagado para que el sistema divida los gastos entre los 19.</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Concepto / Descripción</label>
+                    <input type="text" id="expense-concept" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: Bebidas súper / Carne asado">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Importe (€)</label>
+                        <input type="number" step="0.01" id="expense-amount" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: 45.50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">¿Quién pagó?</label>
+                        <select id="expense-payer" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <!-- Inyección dinámica de pagador -->
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Enlace al Ticket / Recibo (Opcional)</label>
+                    <input type="url" id="expense-ticket" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="https://drive.google.com/file/... o foto subida">
+                </div>
+            </div>
+            <div class="pt-2 flex gap-3">
+                <button onclick="closeAddExpenseModal()" class="flex-1 h-11 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-bold transition-all">Cancelar</button>
+                <button onclick="saveExpense()" class="flex-1 h-11 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-emerald-600/20">Agregar Gasto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AÑADIR CANCIÓN -->
+    <div id="add-music-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-slate-100 shadow-2xl space-y-4 relative">
+            <button onclick="closeAddMusicModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div>
+                <h3 id="music-modal-title" class="text-xl font-extrabold text-slate-800">Añadir Petición / Canción</h3>
+                <p class="text-xs text-slate-500 mt-1">Sugerencias para amenizar la fiesta en Can Ribes.</p>
+            </div>
+            <div class="space-y-4">
+                <input type="hidden" id="music-id">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Título / Artista</label>
+                    <input type="text" id="music-song" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: Estopa - Como Camarón">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Enlace Spotify o YouTube (Opcional)</label>
+                    <input type="url" id="music-url" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="https://open.spotify.com/track/...">
+                </div>
+            </div>
+            <div class="pt-2 flex gap-3">
+                <button onclick="closeAddMusicModal()" class="flex-1 h-11 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-bold transition-all">Cancelar</button>
+                <button onclick="saveMusic()" class="flex-1 h-11 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-emerald-600/20">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AÑADIR ARTÍCULO GENERAL A LA COMPRA -->
+    <div id="add-general-item-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border border-slate-100 shadow-2xl space-y-4 relative">
+            <button onclick="closeAddGeneralItemModal()" class="absolute top-4 right-4 text-slate-300 hover:text-slate-500"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div>
+                <h3 class="text-xl font-extrabold text-slate-800">Añadir Compra General</h3>
+                <p class="text-xs text-slate-500 mt-1">Cosas genéricas para la casa (hielo, vasos, carbón, etc).</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Nombre del artículo</label>
+                    <input type="text" id="gen-item-title" class="w-full h-11 bg-slate-50 border border-slate-200 rounded-xl px-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Ej: 10 Bolsas de Hielo">
+                </div>
+            </div>
+            <div class="pt-2 flex gap-3">
+                <button onclick="closeAddGeneralItemModal()" class="flex-1 h-11 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-bold transition-all">Cancelar</button>
+                <button onclick="saveGeneralItem()" class="flex-1 h-11 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-emerald-600/20">Añadir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Imports -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, doc, onSnapshot, setDoc, updateDoc, collection, deleteDoc, query, orderBy, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, setDoc, updateDoc, deleteDoc, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
+        // Configuración de tu cuenta Firebase existente
         const firebaseConfig = {
             apiKey: "AIzaSyCo7qB8-8GSrBbWevoNQsufTmnlto2vZoU",
             authDomain: "teams-13d3b.firebaseapp.com",
@@ -201,90 +751,298 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
-        const appId = "rural-can-ribes-2026-v2";
 
-        const PARTICIPANTS = ["Jordi", "Pako Espi", "Ruben", "Giacomo", "Luis", "Gabriel", "Michele", "Jonas", "Elvin", "Albert", "Guillermo", "Víctor", "Gábor", "Iban", "Ferran", "Nico", "Cristian", "Mikel", "Alex"];
+        // Claves exclusivas de colecciones de Can Ribes para no pisar el fútbol
+        const collectionPrefix = "rural-camos-2026";
+        const appId = "rural_hub";
 
-        let currentUser = localStorage.getItem('rural_user');
-        let currentModalMode = '';
-        let currentEditId = '';
-
-        const menusInfo = {
-            v_cena: { title: "Viernes Cena", chef: "Giacomo", cleaning: "Guillermo / Ferran" },
-            s_des: { title: "Sábado Desayuno", chef: "Jonas", cleaning: "Gabriel" },
-            s_com: { title: "Sábado Comida (Asado)", chef: "Gabriel / Elvin", cleaning: "Gábor / +1" },
-            s_cena: { title: "Sábado Cena", chef: "Giacomo", cleaning: "Víctor / Luis" },
-            d_des: { title: "Domingo Desayuno", chef: "Guillermo", cleaning: "Nico" },
-            d_com: { title: "Domingo Comida (Paella)", chef: "Jordi", cleaning: "Todos" }
-        };
-
-        const carsInfo = [
-            { time: "14:00", driver: "Elvin", pax: ["Mikel", "Giacomo", "Gabriel"] },
-            { time: "15:00", driver: "Iban", pax: ["Michele", "Albert", "Luis", "Rubén"] },
-            { time: "18:00", driver: "Víctor", pax: ["Ferran", "Nico", "Gábor"] }
+        const membersList = [
+            "Jordi", "Pako Espi", "Ruben", "Giacomo", "Luis", "Gabriel", 
+            "Michele", "Jonas", "Elvin", "Albert", "Guillermo", "Víctor", 
+            "Gábor", "Iban", "Ferran", "Nico", "Cristian", "Mikel", "Alex"
         ];
 
-        const renderMenu = (data) => {
-            const container = document.getElementById('menu-container');
-            container.innerHTML = Object.keys(menusInfo).map(key => {
-                const info = menusInfo[key];
-                const saved = data[key] || {};
-                return `
-                <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-4">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-[10px] font-black text-emerald-600 uppercase tracking-tighter">${info.title}</p>
-                            <h4 class="text-xl font-black text-slate-800">${info.chef}</h4>
+        let currentUser = localStorage.getItem('rural_user') || "";
+        let globalState = {
+            menus: {},
+            compras: {},
+            actividades: {},
+            gastos: {},
+            musica: {}
+        };
+
+        // Autenticación inicial de Firebase
+        const initAuthAndSync = async () => {
+            try {
+                await signInAnonymously(auth);
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        initDatabaseListeners();
+                    }
+                });
+            } catch (err) {
+                console.error("Firebase Auth Error", err);
+            }
+        };
+
+        // Escucha colectiva en tiempo real para todos los apartados
+        const initDatabaseListeners = () => {
+            // 1. Menús
+            onSnapshot(collection(db, "artifacts", appId, "public", "data", `${collectionPrefix}-menus`), (snap) => {
+                snap.forEach(docSnap => {
+                    globalState.menus[docSnap.id] = docSnap.data();
+                });
+                renderMenusUI();
+                renderShoppingList();
+            });
+
+            // 2. Compras
+            onSnapshot(collection(db, "artifacts", appId, "public", "data", `${collectionPrefix}-compras`), (snap) => {
+                globalState.compras = {};
+                snap.forEach(docSnap => {
+                    globalState.compras[docSnap.id] = docSnap.data();
+                });
+                renderShoppingList();
+            });
+
+            // 3. Actividades
+            onSnapshot(collection(db, "artifacts", appId, "public", "data", `${collectionPrefix}-actividades`), (snap) => {
+                globalState.actividades = {};
+                snap.forEach(docSnap => {
+                    globalState.actividades[docSnap.id] = docSnap.data();
+                });
+                renderActivitiesUI();
+            });
+
+            // 4. Gastos
+            onSnapshot(collection(db, "artifacts", appId, "public", "data", `${collectionPrefix}-gastos`), (snap) => {
+                globalState.gastos = {};
+                snap.forEach(docSnap => {
+                    globalState.gastos[docSnap.id] = docSnap.data();
+                });
+                renderExpensesUI();
+            });
+
+            // 5. Música
+            onSnapshot(collection(db, "artifacts", appId, "public", "data", `${collectionPrefix}-musica`), (snap) => {
+                globalState.musica = {};
+                snap.forEach(docSnap => {
+                    globalState.musica[docSnap.id] = docSnap.data();
+                });
+                renderMusicaUI();
+            });
+        };
+
+        // Renderizado del Menú
+        const renderMenusUI = () => {
+            const keys = ['viernes_cena', 'sabado_desayuno', 'sabado_comida', 'sabado_cena', 'domingo_desayuno', 'domingo_comida'];
+            keys.forEach(key => {
+                const dishEl = document.getElementById(`menu-dishes-${key}`);
+                const ingEl = document.getElementById(`menu-ing-${key}`);
+                const data = globalState.menus[key] || {};
+
+                if (dishEl) {
+                    dishEl.innerText = data.dishes || "Sin platos cargados. Pulsa en editar para añadir propuestas.";
+                }
+                if (ingEl) {
+                    if (data.ingredients && data.ingredients.trim() !== "") {
+                        ingEl.innerText = data.ingredients.split(',').map(i => i.trim()).join(', ');
+                    } else {
+                        ingEl.innerText = "Ninguno asignado.";
+                    }
+                }
+            });
+        };
+
+        // Renderizado Dinámico de la Lista de la Compra Categorizada
+        const renderShoppingList = () => {
+            const wrapper = document.getElementById('compra-categories-wrapper');
+            if (!wrapper) return;
+
+            // Agrupar items
+            const categories = {
+                "General": []
+            };
+
+            const menuKeys = {
+                'viernes_cena': 'Viernes Cena (Giacomo)',
+                'sabado_desayuno': 'Sábado Desayuno (Jonas)',
+                'sabado_comida': 'Sábado Comida (Asado - Gabriel/Elvin)',
+                'sabado_cena': 'Sábado Cena (Giacomo)',
+                'domingo_desayuno': 'Domingo Desayuno (Guillermo)',
+                'domingo_comida': 'Domingo Comida (Paella - Jordi)'
+            };
+
+            // Inicializar las categorías de los menús
+            Object.values(menuKeys).forEach(catName => {
+                categories[catName] = [];
+            });
+
+            // 1. Añadir ingredientes autogenerados desde el menú
+            Object.keys(menuKeys).forEach(key => {
+                const menuData = globalState.menus[key] || {};
+                const catName = menuKeys[key];
+                if (menuData.ingredients && menuData.ingredients.trim() !== "") {
+                    const ingList = menuData.ingredients.split(',');
+                    ingList.forEach(ing => {
+                        const cleanIngName = ing.trim();
+                        if (cleanIngName !== "") {
+                            // Buscar si ya existe en las compras de la base de datos
+                            const idCompuesto = `menu_${key}_${cleanIngName.toLowerCase().replace(/\s+/g, '_')}`;
+                            const dbItem = globalState.compras[idCompuesto] || {
+                                title: cleanIngName,
+                                checked: false,
+                                category: catName,
+                                author: menuData.chef || "Chef"
+                            };
+
+                            categories[catName].push({
+                                id: idCompuesto,
+                                ...dbItem
+                            });
+                        }
+                    });
+                }
+            });
+
+            // 2. Clasificar el resto de artículos de compras manuales
+            Object.keys(globalState.compras).forEach(id => {
+                const item = globalState.compras[id];
+                if (!id.startsWith('menu_')) {
+                    categories["General"].push({
+                        id: id,
+                        ...item
+                    });
+                }
+            });
+
+            // 3. Generar HTML Categorizado
+            let html = "";
+            Object.keys(categories).forEach(cat => {
+                const list = categories[cat];
+                if (list.length === 0 && cat !== "General") return; // Ocultar menús sin ingredientes cargados
+
+                html += `
+                <div class="bg-white rounded-3xl border border-slate-100 card-shadow overflow-hidden">
+                    <div class="p-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
+                        <h3 class="font-extrabold text-slate-800 text-sm flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full ${cat === 'General' ? 'bg-slate-400' : 'bg-emerald-500'}"></span>
+                            ${cat}
+                        </h3>
+                        <span class="text-[10px] font-bold bg-slate-200 px-2.5 py-0.5 rounded text-slate-600">${list.length} artículos</span>
+                    </div>
+                    <div class="divide-y divide-slate-100">
+                `;
+
+                if (list.length === 0) {
+                    html += `<p class="p-4 text-xs text-slate-400 italic text-center">La lista está vacía. Propón ingredientes en el menú correspondiente o añade compras generales.</p>`;
+                } else {
+                    list.forEach(item => {
+                        const isChecked = item.checked;
+                        html += `
+                        <div onclick="toggleShoppingItem('${item.id}', ${isChecked}, '${item.title.replace(/'/g, "\\'")}', '${cat}')" class="flex items-center gap-4 p-4 hover:bg-slate-50/50 transition-colors cursor-pointer select-none">
+                            <div class="w-6 h-6 rounded-lg border-2 ${isChecked ? 'bg-emerald-500 border-emerald-500 text-white flex items-center justify-center' : 'border-slate-200'}">
+                                ${isChecked ? '<i data-lucide="check" class="w-4 h-4"></i>' : ''}
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-semibold ${isChecked ? 'line-through text-slate-400' : 'text-slate-800'}">${item.title}</p>
+                                <p class="text-[10px] text-slate-400">Añadido por: ${item.author || "Grupo"}</p>
+                            </div>
+                            ${cat === 'General' ? `
+                                <button onclick="event.stopPropagation(); deleteGeneralItem('${item.id}')" class="text-slate-300 hover:text-red-500 transition-colors p-1">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            ` : ''}
                         </div>
-                        <button onclick="window.openModal('menu', '${key}')" class="p-2 bg-slate-50 text-slate-400 rounded-xl hover:text-emerald-600 transition-colors">
-                            <i data-lucide="edit-3" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl">
-                        <p class="text-xs font-bold text-slate-400 mb-1 uppercase text-[9px]">Platos:</p>
-                        <p class="text-sm text-slate-700">${saved.platos || '<span class="italic text-slate-300">Pendiente...</span>'}</p>
-                        ${saved.ingredientes ? `<p class="mt-2 text-[10px] text-emerald-500 font-bold">🛒 Compra: ${saved.ingredientes}</p>` : ''}
-                    </div>
-                    <div class="flex items-center gap-2 text-indigo-500">
-                        <i data-lucide="sparkles" class="w-4 h-4"></i>
-                        <p class="text-[10px] font-black uppercase">Fregar: ${info.cleaning}</p>
+                        `;
+                    });
+                }
+
+                html += `
                     </div>
                 </div>
                 `;
-            }).join('');
+            });
+
+            wrapper.innerHTML = html;
             lucide.createIcons();
         };
 
-        const renderActividades = (list) => {
-            const container = document.getElementById('actividades-container');
-            container.innerHTML = list.map(act => {
-                const userIn = (act.participants || []).includes(currentUser);
+        // Cambiar el estado tachado de un ingrediente/compra
+        window.toggleShoppingItem = async (id, currentStatus, title, category) => {
+            try {
+                await setDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-compras`, id), {
+                    title: title,
+                    checked: !currentStatus,
+                    category: category,
+                    author: currentUser || "Invitado"
+                });
+            } catch (err) {
+                console.error("Error toggling shopping item", err);
+            }
+        };
+
+        // Eliminar compra general de la lista
+        window.deleteGeneralItem = async (id) => {
+            if (confirm("¿Seguro de quitar este elemento general?")) {
+                try {
+                    await deleteDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-compras`, id));
+                } catch (err) {
+                    console.error("Error deleting general item", err);
+                }
+            }
+        };
+
+        // Renderizado de la lista de Actividades Lúdicas
+        const renderActivitiesUI = () => {
+            const container = document.getElementById('activities-list-container');
+            if (!container) return;
+
+            const items = Object.keys(globalState.actividades).map(id => ({
+                id,
+                ...globalState.actividades[id]
+            }));
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 card-shadow text-center col-span-2 space-y-3">
+                    <i data-lucide="party-popper" class="w-10 h-10 text-slate-300 mx-auto"></i>
+                    <p class="text-sm text-slate-500 font-semibold">No hay juegos ni torneos creados aún.</p>
+                    <p class="text-xs text-slate-400">¿Hacemos un torneo de póker? ¿Juegos de mesa? ¡Propón uno nuevo!</p>
+                </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            container.innerHTML = items.map(act => {
+                const participants = act.participants || [];
+                const isJoined = participants.includes(currentUser);
                 return `
-                <div class="bg-white p-7 rounded-[3rem] border border-slate-100 shadow-lg space-y-5">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">${act.time || 'Horario pendiente'}</span>
-                            <h4 class="text-2xl font-black text-slate-900 mt-2">${act.title}</h4>
-                            <p class="flex items-center gap-1 text-slate-400 text-xs font-bold mt-1">
-                                <i data-lucide="map-pin" class="w-3 h-3"></i> ${act.location || 'Por confirmar'}
-                            </p>
+                <div class="bg-white p-6 rounded-3xl border border-slate-100 card-shadow space-y-4 relative flex flex-col justify-between">
+                    <button onclick="deleteActivity('${act.id}')" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-colors">
+                        <i data-lucide="trash-2" class="w-4.5 h-4.5"></i>
+                    </button>
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded uppercase">${act.time || 'Horario por definir'}</span>
+                            <span class="text-[9px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded uppercase">${act.place || 'Can Ribes'}</span>
                         </div>
-                        <button onclick="window.deleteItem('actividades', '${act.id}')" class="text-slate-300 hover:text-rose-500"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
-                    </div>
-                    
-                    <div class="bg-slate-50 p-5 rounded-2xl">
-                        <p class="text-xs text-slate-600 leading-relaxed">${act.description || 'Sin descripción.'}</p>
+                        <h4 class="font-extrabold text-slate-800 text-base leading-tight">${act.title}</h4>
+                        <p class="text-xs text-slate-500 leading-relaxed">${act.desc || 'Sin descripción.'}</p>
                     </div>
 
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Participantes (${(act.participants || []).length})</p>
-                            <button onclick="window.toggleParticipation('${act.id}', ${userIn})" class="px-4 py-2 rounded-xl text-xs font-black ${userIn ? 'bg-rose-100 text-rose-500' : 'bg-emerald-600 text-white shadow-md'} transition-all">
-                                ${userIn ? 'Quitarme' : 'Apuntarme'}
+                    <div class="border-t border-slate-100 pt-4 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Apuntados (${participants.length}):</span>
+                            <button onclick="toggleJoinActivity('${act.id}', ${isJoined})" class="px-3 py-1 rounded-lg text-xs font-bold transition-all ${isJoined ? 'bg-rose-50 text-rose-600 border border-rose-100' : 'bg-emerald-50 text-emerald-600 border border-emerald-100'}">
+                                ${isJoined ? 'Borrarse' : 'Apuntarse'}
                             </button>
                         </div>
                         <div class="flex flex-wrap gap-1.5">
-                            ${(act.participants || []).map(p => `<span class="bg-white border border-slate-100 px-2.5 py-1 rounded-lg text-[10px] font-bold text-slate-600 shadow-sm">${p}</span>`).join('')}
+                            ${participants.length === 0 ? '<span class="text-xs text-slate-400 italic">Nadie apuntado aún...</span>' : participants.map(p => `
+                                <span class="text-[10px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-semibold border border-slate-200">🙋 ${p}</span>
+                            `).join('')}
                         </div>
                     </div>
                 </div>
@@ -293,281 +1051,470 @@
             lucide.createIcons();
         };
 
-        const renderCompra = (list) => {
-            const container = document.getElementById('shopping-list');
-            container.innerHTML = list.sort((a,b) => b.time - a.time).map(item => `
-                <div class="flex items-center justify-between p-5 group hover:bg-slate-50 transition-colors">
-                    <div class="flex items-center gap-4 flex-1 cursor-pointer" onclick="window.toggleCompra('${item.id}', ${item.checked})">
-                        <div class="w-6 h-6 rounded-full border-2 ${item.checked ? 'bg-emerald-500 border-emerald-500' : 'border-slate-200'} flex items-center justify-center transition-all">
-                            ${item.checked ? '<i data-lucide="check" class="w-4 h-4 text-white"></i>' : ''}
-                        </div>
-                        <div>
-                            <p class="text-sm font-bold ${item.checked ? 'checked text-slate-300' : 'text-slate-700'}">${item.text}</p>
-                            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">${item.user || 'Sist'}</p>
-                        </div>
-                    </div>
-                    <button onclick="window.deleteItem('compra', '${item.id}')" class="p-2 text-slate-300 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-all">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                </div>
-            `).join('');
-            lucide.createIcons();
+        // Borrar actividad de la base de datos
+        window.deleteActivity = async (id) => {
+            if (confirm("¿Quieres eliminar esta propuesta de actividad/juego?")) {
+                try {
+                    await deleteDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-actividades`, id));
+                } catch (err) {
+                    console.error("Error deleting activity", err);
+                }
+            }
         };
 
-        const renderExpenses = (list) => {
-            const container = document.getElementById('expenses-list');
-            const totalEl = document.getElementById('total-spent');
-            const perPersonEl = document.getElementById('per-person');
-            const settlementEl = document.getElementById('settlement-list');
+        // Apuntarse o borrarse de una actividad
+        window.toggleJoinActivity = async (id, isJoined) => {
+            if (!currentUser) return;
+            const act = globalState.actividades[id];
+            let participants = [...(act.participants || [])];
 
-            let total = 0;
-            const paidByMember = {};
-            PARTICIPANTS.forEach(p => paidByMember[p] = 0);
+            if (isJoined) {
+                participants = participants.filter(p => p !== currentUser);
+            } else {
+                if (!participants.includes(currentUser)) {
+                    participants.push(currentUser);
+                }
+            }
 
-            list.forEach(ex => {
-                total += parseFloat(ex.amount);
-                paidByMember[ex.payer] = (paidByMember[ex.payer] || 0) + parseFloat(ex.amount);
+            try {
+                await updateDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-actividades`, id), {
+                    participants: participants
+                });
+            } catch (err) {
+                console.error("Error toggling participation", err);
+            }
+        };
+
+        // Renderizado del Balance y Lista de Gastos
+        const renderExpensesUI = () => {
+            const listEl = document.getElementById('expenses-list');
+            const totalEl = document.getElementById('total-comun-cash');
+            const perCapitaEl = document.getElementById('total-per-capita');
+            const countEl = document.getElementById('total-justificados-count');
+            const balanceEl = document.getElementById('member-balance-list');
+
+            if (!listEl || !totalEl || !perCapitaEl || !countEl || !balanceEl) return;
+
+            const items = Object.keys(globalState.gastos).map(id => ({
+                id,
+                ...globalState.gastos[id]
+            }));
+
+            // Calcular gastos totales y justificados
+            let totalComun = 0;
+            let justificados = 0;
+            const payerTotals = {};
+
+            // Inicializar todos los 19 miembros en cero
+            membersList.forEach(m => {
+                payerTotals[m] = 0;
             });
 
-            totalEl.innerText = `${total.toFixed(2)}€`;
-            const perPerson = total / 19;
-            perPersonEl.innerText = `${perPerson.toFixed(2)}€`;
+            items.forEach(exp => {
+                const amount = parseFloat(exp.amount) || 0;
+                totalComun += amount;
+                if (exp.ticket && exp.ticket.trim() !== "") justificados++;
 
-            container.innerHTML = list.map(ex => `
-                <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm flex justify-between items-center">
-                    <div>
-                        <h4 class="font-black text-slate-800">${ex.description}</h4>
-                        <div class="flex gap-2 items-center">
-                            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-bold uppercase">${ex.payer}</span>
-                            ${ex.receiptUrl ? `<a href="${ex.receiptUrl}" target="_blank" class="text-[10px] text-indigo-500 font-bold flex items-center gap-1 underline"><i data-lucide="file-text" class="w-3 h-3"></i>Ver Ticket</a>` : ''}
+                if (payerTotals[exp.payer] !== undefined) {
+                    payerTotals[exp.payer] += amount;
+                }
+            });
+
+            const share = totalComun / 19; // Gasto por cabeza entre los 19 fijos
+
+            // Pintar resumen
+            totalEl.innerText = `${totalComun.toFixed(2)}€`;
+            perCapitaEl.innerText = `${share.toFixed(2)}€`;
+            countEl.innerText = `${justificados} de ${items.length}`;
+
+            // Pintar lista de gastos
+            if (items.length === 0) {
+                listEl.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-6">No se ha cargado ningún gasto común todavía.</p>`;
+            } else {
+                listEl.innerHTML = items.map(exp => `
+                <div class="bg-slate-50 p-4 rounded-2xl flex items-center justify-between border border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                            <i data-lucide="receipt" class="w-4.5 h-4.5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-xs">${exp.concept}</h4>
+                            <p class="text-[9px] text-slate-400">Pagado por: <strong>${exp.payer}</strong></p>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-lg font-black text-emerald-600">${parseFloat(ex.amount).toFixed(2)}€</p>
-                        <button onclick="window.deleteItem('expenses', '${ex.id}')" class="text-[10px] text-rose-400 font-bold">Borrar</button>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <span class="text-xs font-black text-slate-800">${parseFloat(exp.amount).toFixed(2)}€</span>
+                            ${exp.ticket ? `<a href="${exp.ticket}" target="_blank" class="block text-[8px] text-emerald-600 font-bold hover:underline">Ver Ticket ↗</a>` : ''}
+                        </div>
+                        <button onclick="deleteExpense('${exp.id}')" class="text-slate-300 hover:text-red-500 transition-colors p-1">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
                     </div>
                 </div>
-            `).join('');
+                `).join('');
+            }
 
-            settlementEl.innerHTML = PARTICIPANTS.map(p => {
-                const balance = paidByMember[p] - perPerson;
+            // Pintar balance final de todos los miembros de Can Ribes
+            balanceEl.innerHTML = membersList.map(member => {
+                const paid = payerTotals[member] || 0;
+                const balance = paid - share;
+                const isPositive = balance >= 0;
+
                 return `
-                <div class="flex items-center justify-between p-4 px-6">
-                    <span class="text-sm font-bold text-slate-700">${p}</span>
-                    <span class="text-sm font-black ${balance >= 0 ? 'text-emerald-600' : 'text-rose-500'}">
-                        ${balance >= 0 ? '+' : ''}${balance.toFixed(2)}€
+                <div class="flex justify-between items-center text-xs p-2 bg-slate-50/50 rounded-xl border border-slate-100">
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-slate-700">${member}</span>
+                        <span class="text-[9px] text-slate-400">(Pagó: ${paid.toFixed(1)}€)</span>
+                    </div>
+                    <span class="font-extrabold ${isPositive ? 'text-emerald-600 bg-emerald-50' : 'text-rose-600 bg-rose-50'} px-2 py-0.5 rounded text-[10px]">
+                        ${isPositive ? '+' : ''}${balance.toFixed(2)}€
                     </span>
                 </div>
                 `;
             }).join('');
+
             lucide.createIcons();
         };
 
-        const renderMusica = (list) => {
-            const container = document.getElementById('music-list');
-            container.innerHTML = list.map(m => `
-                <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm flex items-center justify-between">
-                    <div class="flex items-center gap-4 flex-1 min-w-0">
-                        <div class="w-10 h-10 flex-shrink-0 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center">
-                            <i data-lucide="music"></i>
-                        </div>
-                        <div class="truncate">
-                            <h4 class="font-black text-slate-800 text-sm truncate">${m.title}</h4>
-                            ${m.link ? `<a href="${m.link}" target="_blank" class="text-[10px] text-indigo-500 font-bold truncate block">Ver Enlace</a>` : ''}
-                        </div>
-                    </div>
-                    <button onclick="window.deleteItem('musica', '${m.id}')" class="p-2 text-slate-300 hover:text-rose-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        };
-
-        const renderCars = () => {
-            const container = document.getElementById('cars-container');
-            container.innerHTML = carsInfo.map(car => `
-                <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="bg-indigo-600 text-white px-4 py-1 rounded-full text-[10px] font-black uppercase">Salida ${car.time}</span>
-                        <h4 class="text-xl font-black text-slate-800 italic">Coche ${car.driver}</h4>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        ${car.pax.map(p => `<span class="bg-slate-100 text-slate-600 px-3 py-1.5 rounded-xl text-xs font-bold">${p}</span>`).join('')}
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        };
-
-        window.login = () => {
-            const name = document.getElementById('username-input').value.trim();
-            if (name) {
-                localStorage.setItem('rural_user', name);
-                currentUser = name;
-                document.getElementById('login-overlay').classList.add('hidden');
-                initApp();
+        // Borrar gasto
+        window.deleteExpense = async (id) => {
+            if (confirm("¿Seguro que quieres borrar este gasto?")) {
+                try {
+                    await deleteDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-gastos`, id));
+                } catch (err) {
+                    console.error("Error deleting expense", err);
+                }
             }
         };
 
-        window.showTab = (tabId) => {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => {
-                el.classList.remove('active');
-                el.classList.add('text-slate-400');
-            });
-            document.getElementById('tab-' + tabId).classList.add('active');
-            const btn = document.getElementById('btn-' + tabId);
-            btn.classList.add('active');
-            btn.classList.remove('text-slate-400');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            lucide.createIcons();
-        };
+        // Renderizado de Playlist de Música
+        const renderMusicaUI = () => {
+            const container = document.getElementById('musica-list-container');
+            if (!container) return;
 
-        window.openModal = (mode, id = '') => {
-            currentModalMode = mode;
-            currentEditId = id;
-            const m = document.getElementById('modal');
-            const f = document.getElementById('modal-fields');
-            const t = document.getElementById('modal-title');
-            m.classList.remove('hidden');
-            
-            f.innerHTML = '';
-            if (mode === 'menu') {
-                t.innerText = `Editar ${menusInfo[id].title}`;
-                f.innerHTML = `
-                    <textarea id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-sm" placeholder="Describe los platos..." rows="3"></textarea>
-                    <textarea id="inp-2" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-sm" placeholder="Ingredientes (separados por comas)..." rows="2"></textarea>
-                `;
-            } else if (mode === 'actividades') {
-                t.innerText = "Proponer Actividad";
-                f.innerHTML = `
-                    <input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold" placeholder="Nombre (ej: Torneo Poker)">
-                    <input id="inp-2" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-sm" placeholder="Horario (ej: Sábado 17h)">
-                    <input id="inp-3" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-sm" placeholder="Lugar (ej: Terraza)">
-                    <textarea id="inp-4" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-sm" placeholder="Reglas / Notas..." rows="3"></textarea>
-                `;
-            } else if (mode === 'compra') {
-                t.innerText = "Añadir a la Compra";
-                f.innerHTML = `<input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold" placeholder="¿Qué hace falta?">`;
-            } else if (mode === 'gastos') {
-                t.innerText = "Nuevo Gasto";
-                f.innerHTML = `
-                    <input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold" placeholder="Concepto (ej: Carne asado)">
-                    <input id="inp-2" type="number" step="0.01" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-black text-emerald-600" placeholder="Importe €">
-                    <select id="inp-3" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold">
-                        ${PARTICIPANTS.map(p => `<option value="${p}" ${p === currentUser ? 'selected' : ''}>Pagado por: ${p}</option>`).join('')}
-                    </select>
-                    <input id="inp-4" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-[10px]" placeholder="Link foto Ticket (opcional)">
-                `;
-            } else if (mode === 'musica') {
-                t.innerText = "Petición Musical";
-                f.innerHTML = `
-                    <input id="inp-1" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none font-bold" placeholder="Título / Artista">
-                    <input id="inp-2" class="w-full bg-slate-50 p-5 rounded-2xl border border-slate-100 outline-none text-xs" placeholder="Link Spotify/Youtube (opcional)">
-                `;
+            const items = Object.keys(globalState.musica).map(id => ({
+                id,
+                ...globalState.musica[id]
+            }));
+
+            if (items.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-6">Playlist vacía. Propón temas o enlaces de Spotify/YouTube.</p>`;
+                return;
             }
-        };
 
-        window.closeModal = () => document.getElementById('modal').classList.add('hidden');
-
-        document.getElementById('modal-save').onclick = async () => {
-            const v1 = document.getElementById('inp-1').value.trim();
-            if (!v1) return;
-
-            if (currentModalMode === 'menu') {
-                const v2 = document.getElementById('inp-2').value.trim();
-                await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'menu', currentEditId), { platos: v1, ingredientes: v2, time: Date.now() });
-                if (v2) {
-                    const list = v2.split(',').map(i => i.trim()).filter(i => i);
-                    for (const item of list) {
-                        await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'compra')), { 
-                            text: `${item} (${menusInfo[currentEditId].title})`, 
-                            user: 'Sistema', checked: false, time: Date.now() 
-                        });
+            container.innerHTML = items.map(song => {
+                let icon = "music-3";
+                let colorClass = "text-indigo-600 bg-indigo-50";
+                
+                if (song.url) {
+                    if (song.url.includes("spotify")) {
+                        icon = "music-4";
+                        colorClass = "text-emerald-500 bg-emerald-50";
+                    } else if (song.url.includes("youtube") || song.url.includes("youtu.be")) {
+                        icon = "play-circle";
+                        colorClass = "text-red-500 bg-red-50";
                     }
                 }
-            } else if (currentModalMode === 'actividades') {
-                const v2 = document.getElementById('inp-2').value;
-                const v3 = document.getElementById('inp-3').value;
-                const v4 = document.getElementById('inp-4').value;
-                await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'actividades')), { 
-                    title: v1, time: v2, location: v3, description: v4, creator: currentUser, participants: [currentUser], timestamp: Date.now() 
-                });
-            } else if (currentModalMode === 'compra') {
-                await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'compra')), { text: v1, user: currentUser, checked: false, time: Date.now() });
-            } else if (currentModalMode === 'gastos') {
-                const v2 = document.getElementById('inp-2').value;
-                const v3 = document.getElementById('inp-3').value;
-                const v4 = document.getElementById('inp-4').value;
-                await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'expenses')), { 
-                    description: v1, amount: v2, payer: v3, receiptUrl: v4, time: Date.now() 
-                });
-            } else if (currentModalMode === 'musica') {
-                const v2 = document.getElementById('inp-2').value;
-                await setDoc(doc(collection(db, 'artifacts', appId, 'public', 'data', 'musica')), { title: v1, link: v2, user: currentUser, time: Date.now() });
+
+                return `
+                <div class="bg-slate-50 p-4 rounded-2xl flex items-center justify-between border border-slate-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 ${colorClass} rounded-xl flex items-center justify-center">
+                            <i data-lucide="${icon}" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-slate-800 text-xs">${song.song}</h4>
+                            <p class="text-[9px] text-slate-400">Propuesta por: <strong>${song.author}</strong></p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        ${song.url ? `<a href="${song.url}" target="_blank" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all">Escuchar</a>` : ''}
+                        <button onclick="openEditMusic('${song.id}', '${song.song.replace(/'/g, "\\'")}', '${(song.url || '').replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-slate-600 p-1"><i data-lucide="edit" class="w-4 h-4"></i></button>
+                        <button onclick="deleteMusica('${song.id}')" class="text-slate-300 hover:text-red-500 p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        };
+
+        // Eliminar elemento de Playlist
+        window.deleteMusica = async (id) => {
+            if (confirm("¿Quieres quitar esta canción de la playlist?")) {
+                try {
+                    await deleteDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-musica`, id));
+                } catch (err) {
+                    console.error("Error deleting song", err);
+                }
             }
-            closeModal();
         };
 
-        window.toggleParticipation = async (id, isJoined) => {
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'actividades', id);
-            await updateDoc(docRef, { participants: isJoined ? arrayRemove(currentUser) : arrayUnion(currentUser) });
+        // --- SISTEMA DE LOGINS & MODALES ---
+
+        window.saveUser = () => {
+            const select = document.getElementById('user-select');
+            const val = select.value;
+            if (val) {
+                currentUser = val;
+                localStorage.setItem('rural_user', val);
+                document.getElementById('login-overlay').classList.add('hidden');
+                document.getElementById('current-user-display').innerText = val;
+                
+                // Cargar pagador por defecto en gastos
+                const expPayer = document.getElementById('expense-payer');
+                if (expPayer) {
+                    expPayer.innerHTML = membersList.map(m => `
+                        <option value="${m}" ${m === currentUser ? 'selected' : ''}>${m}</option>
+                    `).join('');
+                }
+                renderShoppingList();
+                renderActivitiesUI();
+            } else {
+                alert("Por favor, selecciona tu nombre de la lista.");
+            }
         };
 
-        window.toggleCompra = async (id, currentStatus) => {
-            await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'compra', id), { checked: !currentStatus });
+        window.logout = () => {
+            localStorage.removeItem('rural_user');
+            currentUser = "";
+            document.getElementById('login-overlay').classList.remove('hidden');
         };
 
-        window.deleteItem = async (col, id) => {
-            if(confirm("¿Estás seguro?")) await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', col, id));
-        };
-
-        const initApp = async () => {
-            if (!currentUser) return;
+        // Comprobar sesión
+        if (currentUser) {
             document.getElementById('login-overlay').classList.add('hidden');
-            await signInAnonymously(auth);
-            
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'menu'), (snap) => {
-                const map = {}; snap.forEach(doc => map[doc.id] = doc.data());
-                renderMenu(map);
-            });
+            document.getElementById('current-user-display').innerText = currentUser;
+        }
 
-            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'actividades'), orderBy('timestamp', 'desc')), (snap) => {
-                const list = []; snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                renderActividades(list);
-            });
-
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'compra'), (snap) => {
-                const list = []; snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                renderCompra(list);
-            });
-
-            onSnapshot(query(collection(db, 'artifacts', appId, 'public', 'data', 'expenses'), orderBy('time', 'desc')), (snap) => {
-                const list = []; snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                renderExpenses(list);
-            });
-
-            onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'musica'), (snap) => {
-                const list = []; snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
-                renderMusica(list);
-            });
-
-            renderCars();
-            updateCountdown();
+        // --- GESTIÓN DE ACCIONES DE MENÚ ---
+        let currentEditingMenuKey = "";
+        window.openEditMenu = (key, title, chef) => {
+            currentEditingMenuKey = key;
+            const data = globalState.menus[key] || {};
+            document.getElementById('modal-menu-title').innerText = `Editar ${title}`;
+            document.getElementById('modal-menu-chef').value = chef;
+            document.getElementById('modal-menu-dishes').value = data.dishes || "";
+            document.getElementById('modal-menu-ingredients').value = data.ingredients || "";
+            document.getElementById('edit-menu-modal').classList.remove('hidden');
         };
 
-        const updateCountdown = () => {
-            const target = new Date('2026-06-06T18:00:00').getTime();
-            setInterval(() => {
-                const now = new Date().getTime();
-                const diff = target - now;
-                if (diff < 0) return;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById('countdown').innerText = `${d}d : ${h}h`;
-            }, 1000);
+        window.closeEditMenuModal = () => {
+            document.getElementById('edit-menu-modal').classList.add('hidden');
         };
 
-        if (currentUser) initApp();
+        window.saveMenu = async () => {
+            if (!currentEditingMenuKey) return;
+            const dishes = document.getElementById('modal-menu-dishes').value;
+            const ingredients = document.getElementById('modal-menu-ingredients').value;
+            const chef = document.getElementById('modal-menu-chef').value;
+
+            try {
+                await setDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-menus`, currentEditingMenuKey), {
+                    dishes: dishes,
+                    ingredients: ingredients,
+                    chef: chef
+                });
+                closeEditMenuModal();
+            } catch (err) {
+                console.error("Error saving menu", err);
+            }
+        };
+
+        // --- ACCIONES DE JUEGOS Y ACTIVIDADES ---
+        window.openAddActivityModal = () => {
+            document.getElementById('add-activity-modal').classList.remove('hidden');
+        };
+
+        window.closeAddActivityModal = () => {
+            document.getElementById('add-activity-modal').classList.add('hidden');
+        };
+
+        window.saveActivity = async () => {
+            const title = document.getElementById('act-title').value;
+            const time = document.getElementById('act-time').value;
+            const place = document.getElementById('act-place').value;
+            const desc = document.getElementById('act-desc').value;
+
+            if (!title) {
+                alert("Completa el nombre de la actividad.");
+                return;
+            }
+
+            const id = `act_${Date.now()}`;
+            try {
+                await setDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-actividades`, id), {
+                    title: title,
+                    time: time,
+                    place: place,
+                    desc: desc,
+                    participants: [currentUser] // Se apunta el creador por defecto
+                });
+                closeAddActivityModal();
+                // Limpiar campos
+                document.getElementById('act-title').value = "";
+                document.getElementById('act-time').value = "";
+                document.getElementById('act-place').value = "";
+                document.getElementById('act-desc').value = "";
+            } catch (err) {
+                console.error("Error creating activity", err);
+            }
+        };
+
+        // --- ACCIONES DE GASTOS ---
+        window.openAddExpenseModal = () => {
+            const payerSelect = document.getElementById('expense-payer');
+            payerSelect.innerHTML = membersList.map(m => `
+                <option value="${m}" ${m === currentUser ? 'selected' : ''}>${m}</option>
+            `).join('');
+            document.getElementById('add-expense-modal').classList.remove('hidden');
+        };
+
+        window.closeAddExpenseModal = () => {
+            document.getElementById('add-expense-modal').classList.add('hidden');
+        };
+
+        window.saveExpense = async () => {
+            const concept = document.getElementById('expense-concept').value;
+            const amount = parseFloat(document.getElementById('expense-amount').value);
+            const payer = document.getElementById('expense-payer').value;
+            const ticket = document.getElementById('expense-ticket').value;
+
+            if (!concept || isNaN(amount) || amount <= 0) {
+                alert("Ingresa un concepto válido y un importe superior a cero.");
+                return;
+            }
+
+            const id = `exp_${Date.now()}`;
+            try {
+                await setDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-gastos`, id), {
+                    concept: concept,
+                    amount: amount,
+                    payer: payer,
+                    ticket: ticket,
+                    date: Date.now()
+                });
+                closeAddExpenseModal();
+                // Limpiar
+                document.getElementById('expense-concept').value = "";
+                document.getElementById('expense-amount').value = "";
+                document.getElementById('expense-ticket').value = "";
+            } catch (err) {
+                console.error("Error saving expense", err);
+            }
+        };
+
+        // --- ACCIONES DE PLAYLIST ---
+        window.openAddMusicModal = () => {
+            document.getElementById('music-modal-title').innerText = "Añadir Petición / Canción";
+            document.getElementById('music-id').value = "";
+            document.getElementById('music-song').value = "";
+            document.getElementById('music-url').value = "";
+            document.getElementById('add-music-modal').classList.remove('hidden');
+        };
+
+        window.openEditMusic = (id, song, url) => {
+            document.getElementById('music-modal-title').innerText = "Editar Petición";
+            document.getElementById('music-id').value = id;
+            document.getElementById('music-song').value = song;
+            document.getElementById('music-url').value = url;
+            document.getElementById('add-music-modal').classList.remove('hidden');
+        };
+
+        window.closeAddMusicModal = () => {
+            document.getElementById('add-music-modal').classList.add('hidden');
+        };
+
+        window.saveMusic = async () => {
+            const idInput = document.getElementById('music-id').value;
+            const song = document.getElementById('music-song').value;
+            const url = document.getElementById('music-url').value;
+
+            if (!song) {
+                alert("Por favor, ingresa el título de la canción.");
+                return;
+            }
+
+            const id = idInput || `song_${Date.now()}`;
+            try {
+                await setDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-musica`, id), {
+                    song: song,
+                    url: url,
+                    author: currentUser || "Invitado"
+                });
+                closeAddMusicModal();
+            } catch (err) {
+                console.error("Error saving music", err);
+            }
+        };
+
+        // --- COMPRAS GENERALES ---
+        window.openAddGeneralItemModal = () => {
+            document.getElementById('add-general-item-modal').classList.remove('hidden');
+        };
+
+        window.closeAddGeneralItemModal = () => {
+            document.getElementById('add-general-item-modal').classList.add('hidden');
+        };
+
+        window.saveGeneralItem = async () => {
+            const title = document.getElementById('gen-item-title').value;
+            if (!title) {
+                alert("Escribe el nombre del artículo.");
+                return;
+            }
+
+            const id = `gen_${Date.now()}`;
+            try {
+                await setDoc(doc(db, "artifacts", appId, "public", "data", `${collectionPrefix}-compras`, id), {
+                    title: title,
+                    checked: false,
+                    category: "General",
+                    author: currentUser || "Invitado"
+                });
+                closeAddGeneralItemModal();
+                document.getElementById('gen-item-title').value = "";
+            } catch (err) {
+                console.error("Error saving general item", err);
+            }
+        };
+
+        // Navegación de pestañas
+        window.showTab = (tabId) => {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('nav button').forEach(el => {
+                el.classList.add('text-slate-400');
+                el.classList.remove('text-emerald-600', 'tab-active');
+            });
+
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            const btn = document.getElementById('btn-' + tabId);
+            if (btn) {
+                btn.classList.remove('text-slate-400');
+                btn.classList.add('text-emerald-600', 'tab-active');
+            }
+            lucide.createIcons();
+        };
+
+        // Cuenta atrás para el viaje
+        const countdownDate = new Date("Jun 6, 2026 14:00:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const display = `${days}d : ${hours}h : ${minutes}m`;
+            const el = document.getElementById("countdown");
+            if (el) el.innerText = distance < 0 ? "¡YA EN CAN RIBES!" : display;
+        }
+
+        setInterval(updateCountdown, 60000);
+        updateCountdown();
+
+        // Inicialización de Firebase al arrancar
+        initAuthAndSync();
+        showTab('itinerario');
     </script>
 </body>
 </html>
